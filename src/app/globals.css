@@ -246,62 +246,114 @@ body {
   pointer-events: none;
 }
 
-.hero-visual__img {
-  filter: saturate(0.85) contrast(1.05) brightness(0.92) sepia(0.18) hue-rotate(5deg);
+/* Cinematic hero — movie title sequence */
+.hero-cinema {
+  isolation: isolate;
 }
 
-.hero-visual__grade {
+.hero-cinema__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  background: #060b12;
+  pointer-events: none;
+}
+
+.hero-cinema__bar--top {
+  top: 0;
+  height: clamp(2.25rem, 6vh, 3.75rem);
+}
+
+.hero-cinema__bar--bottom {
+  bottom: 0;
+  height: clamp(2.25rem, 7vh, 4.25rem);
+}
+
+.hero-cinema__frame {
+  border-radius: 0;
+}
+
+@media (min-width: 768px) {
+  .hero-cinema__frame {
+    border-radius: 0.35rem;
+    box-shadow: 0 0 0 1px rgba(224, 192, 138, 0.12);
+  }
+}
+
+.hero-cinema__img,
+.hero-cinema__video {
+  filter: saturate(0.95) contrast(1.1) brightness(0.78);
+  transform-origin: center center;
+}
+
+.hero-cinema__video {
+  object-fit: cover;
+}
+
+.hero-cinema__grade {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.35) 55%, rgba(201, 164, 108, 0.12) 100%),
-    radial-gradient(circle at 75% 40%, rgba(224, 192, 138, 0.18), transparent 50%);
-  mix-blend-mode: soft-light;
+    linear-gradient(
+      105deg,
+      rgba(6, 11, 18, 0.88) 0%,
+      rgba(6, 11, 18, 0.55) 38%,
+      rgba(6, 11, 18, 0.2) 62%,
+      rgba(6, 11, 18, 0.45) 100%
+    ),
+    linear-gradient(to top, rgba(6, 11, 18, 0.85) 0%, transparent 45%);
 }
 
-.hero-overlay-side {
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.97) 0%,
-    rgba(255, 255, 255, 0.88) 45%,
-    rgba(255, 255, 255, 0.62) 100%
+.hero-cinema__vignette {
+  background: radial-gradient(
+    ellipse 75% 70% at 50% 45%,
+    transparent 35%,
+    rgba(6, 11, 18, 0.55) 100%
   );
 }
 
-.hero-overlay-bottom {
+.hero-cinema__grain {
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: cinema-grain 0.45s steps(2) infinite;
+}
+
+.hero-cinema__scan {
   background: linear-gradient(
-    to top,
-    rgba(255, 255, 255, 0.98) 0%,
-    rgba(255, 255, 255, 0.45) 45%,
-    rgba(245, 246, 248, 0.35) 100%
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    transparent 100%
   );
+  background-size: 100% 220%;
+  animation: cinema-scan 8s linear infinite;
+  opacity: 0.35;
+  pointer-events: none;
 }
 
-[data-theme="dark"] .hero-visual__img {
-  filter: saturate(0.78) contrast(1.06) brightness(0.68) sepia(0.38) hue-rotate(8deg);
+.hero-cinema__title {
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.55);
 }
 
-[data-theme="dark"] .hero-visual__grade {
-  background:
-    linear-gradient(160deg, rgba(8, 21, 37, 0.72) 0%, rgba(15, 33, 55, 0.45) 50%, rgba(201, 164, 108, 0.2) 100%),
-    radial-gradient(circle at 75% 40%, rgba(224, 192, 138, 0.25), transparent 50%);
-  mix-blend-mode: multiply;
+@keyframes cinema-grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-1.5%, 1%);
+  }
+  100% {
+    transform: translate(1%, -1%);
+  }
 }
 
-[data-theme="dark"] .hero-overlay-side {
-  background: linear-gradient(
-    to right,
-    rgba(8, 21, 37, 0.95) 0%,
-    rgba(8, 21, 37, 0.78) 45%,
-    rgba(8, 21, 37, 0.45) 100%
-  );
-}
-
-[data-theme="dark"] .hero-overlay-bottom {
-  background: linear-gradient(
-    to top,
-    rgba(8, 21, 37, 1) 0%,
-    rgba(8, 21, 37, 0.4) 45%,
-    rgba(15, 33, 55, 0.5) 100%
-  );
+@keyframes cinema-scan {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
 }
 
 .portfolio-card-overlay {
@@ -350,7 +402,9 @@ body {
   .marquee,
   .animate-float,
   .animate-pulse-glow,
-  .gradient-animate {
+  .gradient-animate,
+  .hero-cinema__grain,
+  .hero-cinema__scan {
     animation: none !important;
   }
 }

@@ -1,94 +1,174 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { useMousePosition } from "@/hooks/useMousePosition";
 import { siteConfig } from "@/lib/data";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
-import Image from "next/image";
-import { useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { ArrowRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export function Hero() {
-  const mouse = useMousePosition();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const spotlight = useMotionTemplate`radial-gradient(560px circle at ${x}px ${y}px, rgba(201,164,108,0.2), transparent 60%)`;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(true);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    x.set(mouse.x);
-    y.set(mouse.y);
-  }, [mouse.x, mouse.y, x, y]);
+    const video = videoRef.current;
+    if (!video) return;
+
+    const tryPlay = async () => {
+      try {
+        video.muted = true;
+        await video.play();
+        setPlaying(true);
+        setReady(true);
+      } catch {
+        setPlaying(false);
+        setReady(true);
+      }
+    };
+
+    if (video.readyState >= 2) {
+      void tryPlay();
+    } else {
+      video.addEventListener("loadeddata", () => void tryPlay(), { once: true });
+    }
+  }, []);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      void video.play();
+      setPlaying(true);
+    } else {
+      video.pause();
+      setPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setMuted(video.muted);
+  };
 
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 sm:pt-28 md:pt-32">
-      <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <Image
-          src="/hero-handshake.png"
-          alt="Business partners shaking hands over a strategic chess piece and global map"
-          fill
-          priority
-          sizes="100vw"
-          className="hero-visual__img object-cover object-center"
+    <section className="hero-cinema relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#060b12]">
+      <div className="hero-cinema__bar hero-cinema__bar--top" aria-hidden />
+      <div className="hero-cinema__bar hero-cinema__bar--bottom" aria-hidden />
+
+      <div className="hero-cinema__frame absolute inset-x-0 top-[max(4.5rem,env(safe-area-inset-top))] bottom-[clamp(2.5rem,8vh,4.5rem)] mx-auto w-[min(1400px,100%)] overflow-hidden md:top-[max(5.5rem,env(safe-area-inset-top))]">
+        <video
+          ref={videoRef}
+          className="hero-cinema__video absolute inset-0 h-full w-full object-cover object-center"
+          src="/hero-video.mp4"
+          poster="/hero-handshake.png"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-label="Earlsdwara Digital cinematic hero video"
         />
-        <div className="hero-visual__grade absolute inset-0" />
-        <div className="hero-overlay-side absolute inset-0" />
-        <div className="hero-overlay-bottom absolute inset-0" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_70%_50%,rgba(201,164,108,0.14),transparent_55%)]" />
-        <div className="orb animate-pulse-glow left-[-10%] top-[12%] hidden h-64 w-64 bg-highlight/20 md:block md:h-80 md:w-80" />
-        <div className="orb animate-float right-[-5%] bottom-[15%] hidden h-56 w-56 bg-accent/15 md:block md:h-72 md:w-72" />
-        <motion.div className="absolute inset-0" style={{ background: spotlight }} />
+
+        <div className="hero-cinema__grade absolute inset-0" aria-hidden />
+        <div className="hero-cinema__vignette absolute inset-0" aria-hidden />
+        <div className="hero-cinema__grain absolute inset-0" aria-hidden />
+
+        <motion.div
+          className="absolute inset-0 z-20 bg-[#060b12]"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: ready ? 0 : 1 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          aria-hidden
+        />
+
+        {/* Video controls — movie player chrome */}
+        <div className="absolute bottom-4 right-4 z-30 flex items-center gap-2 sm:bottom-5 sm:right-5">
+          <button
+            type="button"
+            onClick={togglePlay}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-black/45 text-white backdrop-blur-md transition hover:bg-black/60"
+            aria-label={playing ? "Pause video" : "Play video"}
+          >
+            {playing ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
+          </button>
+          <button
+            type="button"
+            onClick={toggleMute}
+            className={cn(
+              "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-black/45 text-white backdrop-blur-md transition hover:bg-black/60",
+            )}
+            aria-label={muted ? "Unmute video" : "Mute video"}
+          >
+            {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          </button>
+        </div>
       </div>
 
-      <div className="relative z-10 mx-auto flex w-[min(1200px,92%)] flex-col items-center px-1 py-12 text-center sm:py-14 md:items-start md:py-20 md:text-left">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="glass mb-5 inline-flex max-w-[min(100%,20rem)] items-center gap-2 rounded-full px-3 py-2 text-[11px] font-medium text-subtext sm:mb-6 sm:max-w-none sm:px-4 sm:text-xs"
+      <div className="relative z-10 mx-auto flex w-[min(1100px,92%)] flex-col items-center px-2 pb-8 pt-28 text-center sm:pt-32 md:items-start md:pb-12 md:pt-36 md:text-left">
+        <motion.p
+          initial={{ opacity: 0, letterSpacing: "0.4em" }}
+          animate={{ opacity: 1, letterSpacing: "0.28em" }}
+          transition={{ duration: 1.1, delay: 0.5 }}
+          className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#e0c08a] sm:mb-5 sm:text-xs"
         >
-          <Sparkles size={14} className="text-accent" />
-          Premium digital studio for ambitious brands
-        </motion.div>
+          Now playing · Earlsdwara Digital
+        </motion.p>
 
         <motion.p
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.05 }}
-          className="font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl md:text-6xl lg:text-7xl"
+          transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="hero-cinema__title font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
         >
           {siteConfig.name}
         </motion.p>
 
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.9, delay: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="my-5 h-px w-24 origin-left bg-gradient-to-r from-[#e0c08a] via-[#c9a46c] to-transparent md:w-32"
+          aria-hidden
+        />
+
         <motion.h1
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.12 }}
-          className="mt-3 max-w-3xl font-display text-xl font-medium leading-[1.2] tracking-tight text-subtext sm:mt-4 sm:text-2xl md:text-4xl lg:text-[2.75rem]"
+          transition={{ duration: 0.9, delay: 1.1 }}
+          className="max-w-2xl font-display text-xl font-medium leading-[1.25] tracking-tight text-white/85 sm:text-2xl md:text-3xl lg:text-[2.4rem]"
         >
           We Build Websites That{" "}
-          <span className="gradient-text gradient-animate font-semibold">Grow Businesses.</span>
+          <span className="text-[#e0c08a]">Grow Businesses.</span>
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-4 max-w-2xl text-sm leading-relaxed text-subtext sm:mt-6 sm:text-base md:text-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.3 }}
+          className="mt-4 max-w-xl text-sm leading-relaxed text-white/70 sm:mt-5 sm:text-base"
         >
-          Your website should work harder than your sales team. At Earlsdwara Digital, we create
-          premium websites that convert visitors into customers.
+          Premium websites that convert visitors into customers—crafted for brands that refuse to look average.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.28 }}
-          className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:max-w-none sm:flex-row sm:items-center md:items-start"
+          transition={{ duration: 0.8, delay: 1.45 }}
+          className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:max-w-none sm:flex-row"
         >
           <Button href="#contact" className="w-full min-w-[200px] sm:w-auto">
             Get My Website <ArrowRight size={16} />
           </Button>
-          <Button href="#portfolio" variant="secondary" className="w-full min-w-[200px] sm:w-auto">
+          <Button
+            href="#portfolio"
+            variant="secondary"
+            className="w-full min-w-[200px] border-white/25 bg-white/10 text-white hover:bg-white/20 sm:w-auto"
+          >
             View Portfolio
           </Button>
         </motion.div>
@@ -96,8 +176,8 @@ export function Hero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="mt-8 text-sm tracking-wide text-subtext/90"
+          transition={{ delay: 1.65, duration: 0.8 }}
+          className="mt-7 text-[11px] uppercase tracking-[0.22em] text-white/55 sm:mt-8 sm:text-xs"
         >
           {siteConfig.tagline}
         </motion.p>

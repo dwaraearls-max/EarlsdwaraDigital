@@ -7,12 +7,15 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
+  const overCinema = pathname === "/" && !scrolled && !open;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -49,7 +52,12 @@ export function Navbar() {
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-highlight to-accent font-display text-sm font-bold text-[#081525] shadow-lg shadow-accent/30">
             ED
           </span>
-          <span className="truncate font-display text-base font-semibold tracking-tight text-text transition group-hover:opacity-90 sm:text-xl md:text-2xl">
+          <span
+            className={cn(
+              "truncate font-display text-base font-semibold tracking-tight transition group-hover:opacity-90 sm:text-xl md:text-2xl",
+              overCinema ? "text-white" : "text-text",
+            )}
+          >
             {siteConfig.name}
           </span>
         </Link>
@@ -59,7 +67,10 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-subtext transition hover:text-text"
+              className={cn(
+                "text-sm transition",
+                overCinema ? "text-white/75 hover:text-white" : "text-subtext hover:text-text",
+              )}
             >
               {link.label}
             </Link>
@@ -70,7 +81,12 @@ export function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="glass touch-target rounded-xl text-subtext transition hover:text-text"
+            className={cn(
+              "touch-target rounded-xl transition",
+              overCinema
+                ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                : "glass text-subtext hover:text-text",
+            )}
             aria-label="Toggle theme"
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
@@ -82,7 +98,12 @@ export function Navbar() {
 
         <button
           type="button"
-          className="glass touch-target shrink-0 rounded-xl text-text lg:hidden"
+          className={cn(
+            "touch-target shrink-0 rounded-xl lg:hidden",
+            overCinema
+              ? "border border-white/20 bg-white/10 text-white"
+              : "glass text-text",
+          )}
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
