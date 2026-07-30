@@ -26,7 +26,7 @@ export function WhyChooseUs() {
               className="glass relative overflow-hidden rounded-3xl p-8 text-center"
             >
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-highlight/10 via-transparent to-accent/10" />
-              <p className="relative font-display text-5xl font-semibold text-accent md:text-6xl">
+              <p className="relative font-display text-4xl font-semibold text-accent sm:text-5xl md:text-6xl">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               </p>
               <p className="relative mt-3 text-sm text-subtext">{stat.label}</p>

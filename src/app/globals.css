@@ -50,6 +50,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -59,7 +60,7 @@ body {
     var(--bg-primary);
   color: var(--text);
   font-family: var(--font-libre), "Times New Roman", Times, serif;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 [data-theme="dark"] body {
@@ -72,6 +73,50 @@ body {
 ::selection {
   background: rgba(201, 164, 108, 0.4);
   color: #081525;
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.fixed-safe-bottom {
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 1.25rem));
+}
+
+.fixed-safe-right {
+  right: max(1.25rem, env(safe-area-inset-right, 1.25rem));
+}
+
+.fixed-safe-scroll-top {
+  bottom: calc(max(1.25rem, env(safe-area-inset-bottom, 1.25rem)) + 4.25rem);
+  right: max(1.25rem, env(safe-area-inset-right, 1.25rem));
+}
+
+@media (min-width: 768px) {
+  .fixed-safe-right {
+    right: max(2rem, env(safe-area-inset-right, 2rem));
+  }
+
+  .fixed-safe-scroll-top {
+    right: max(2rem, env(safe-area-inset-right, 2rem));
+  }
+}
+
+.touch-target {
+  display: inline-flex;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 .font-display {

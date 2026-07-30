@@ -23,7 +23,7 @@ export function ScrollToTop() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="glass fixed bottom-24 right-5 z-[60] rounded-2xl p-3 text-text shadow-lg md:right-8"
+          className="glass fixed-safe-scroll-top fixed z-[60] touch-target rounded-2xl text-text shadow-lg"
           aria-label="Scroll to top"
         >
           <ArrowUp size={18} />

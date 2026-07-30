@@ -115,7 +115,7 @@ export function ProjectCalculator() {
 
         <div className="rounded-3xl border border-accent/30 bg-gradient-to-b from-accent/20 to-transparent p-6 text-center lg:sticky lg:top-28 lg:self-start">
           <p className="text-xs uppercase tracking-[0.25em] text-subtext">Instant estimate</p>
-          <p className="mt-4 font-display text-5xl font-bold">{formatCurrency(estimate)}</p>
+          <p className="mt-4 font-display text-4xl font-bold sm:text-5xl">{formatCurrency(estimate)}</p>
           <p className="mt-3 text-sm text-subtext">
             Final quotes are tailored after discovery. This generator gives you a strong starting
             range.

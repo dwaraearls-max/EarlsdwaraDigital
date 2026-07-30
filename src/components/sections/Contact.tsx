@@ -15,7 +15,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative scroll-mt-28 py-20 md:py-28">
+    <section id="contact" className="relative scroll-mt-28 py-16 sm:py-20 md:py-28">
       <div className="mx-auto w-[min(1000px,92%)]">
         <SectionHeading
           eyebrow="Contact"
@@ -23,7 +23,7 @@ export function Contact() {
           description="Tell us about your vision. We’ll respond with clarity, next steps, and a tailored recommendation."
         />
 
-        <div className="glass rounded-3xl p-6 md:p-10">
+        <div className="glass rounded-3xl p-4 sm:p-6 md:p-10">
           {submitted ? (
             <div className="py-10 text-center">
               <p className="font-display text-3xl font-bold">Request received.</p>
@@ -100,16 +100,16 @@ export function Contact() {
                   Book Consultation
                 </Button>
               </div>
-              <p className="md:col-span-2 text-center text-xs text-subtext">
-                Or reach us at{" "}
+              <div className="flex flex-col items-center gap-2 text-center text-xs text-subtext sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-2 md:col-span-2">
+                <span>Or reach us at</span>
                 <a href={`mailto:${siteConfig.email}`} className="text-text underline-offset-2 hover:underline">
                   {siteConfig.email}
-                </a>{" "}
-                ·{" "}
+                </a>
+                <span className="hidden sm:inline">·</span>
                 <a href={siteConfig.social.whatsapp} className="text-text underline-offset-2 hover:underline">
                   {siteConfig.phone}
                 </a>
-              </p>
+              </div>
               <SocialProfileLinks className="md:col-span-2 justify-center" />
             </form>
           )}

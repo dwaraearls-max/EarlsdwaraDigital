@@ -25,9 +25,9 @@ export function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.08 }}
-              className={`glow-card relative rounded-3xl border p-7 md:p-8 ${
+              className={`glow-card relative overflow-visible rounded-3xl border p-6 sm:p-7 md:p-8 ${
                 plan.popular
-                  ? "border-accent/60 bg-gradient-to-b from-accent/20 to-bg-secondary/60 shadow-[0_0_60px_rgba(201,164,108,0.22)]"
+                  ? "border-accent/60 bg-gradient-to-b from-accent/20 to-bg-secondary/60 pt-9 shadow-[0_0_60px_rgba(201,164,108,0.22)]"
                   : "glass"
               }`}
             >
@@ -38,7 +38,7 @@ export function Pricing() {
               ) : null}
               <h3 className="font-display text-2xl font-bold">{plan.name}</h3>
               <p className="mt-2 text-sm text-subtext">{plan.description}</p>
-              <p className="mt-6 font-display text-4xl font-bold">
+              <p className="mt-6 font-display text-3xl font-bold sm:text-4xl">
                 {formatCurrency(plan.price)}
                 <span className="text-base font-normal text-subtext"> / project</span>
               </p>

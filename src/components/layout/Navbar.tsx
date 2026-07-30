@@ -31,21 +31,25 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-[70] transition-all duration-500",
-        scrolled ? "py-3" : "py-5",
+        "safe-top fixed inset-x-0 top-0 z-[70] transition-all duration-500",
+        scrolled ? "py-2 md:py-3" : "py-3 md:py-5",
       )}
     >
       <div
         className={cn(
-          "mx-auto flex w-[min(1200px,92%)] items-center justify-between rounded-2xl px-4 py-3 transition-all duration-500 md:px-6",
+          "mx-auto flex w-[min(1200px,92%)] items-center justify-between gap-2 rounded-2xl px-3 py-2.5 transition-all duration-500 sm:gap-3 sm:px-4 sm:py-3 md:px-6",
           scrolled ? "glass shadow-lg shadow-black/5" : "bg-transparent",
         )}
       >
-        <Link href="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-highlight to-accent font-display text-sm font-bold text-[#081525] shadow-lg shadow-accent/30">
+        <Link
+          href="/"
+          className="group flex min-w-0 flex-1 items-center gap-2 sm:gap-3 sm:flex-none"
+          onClick={() => setOpen(false)}
+        >
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-highlight to-accent font-display text-sm font-bold text-[#081525] shadow-lg shadow-accent/30">
             ED
           </span>
-          <span className="font-display text-xl font-semibold tracking-tight text-text transition group-hover:opacity-90 md:text-2xl">
+          <span className="truncate font-display text-base font-semibold tracking-tight text-text transition group-hover:opacity-90 sm:text-xl md:text-2xl">
             {siteConfig.name}
           </span>
         </Link>
@@ -66,7 +70,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="glass rounded-xl p-2.5 text-subtext transition hover:text-text"
+            className="glass touch-target rounded-xl text-subtext transition hover:text-text"
             aria-label="Toggle theme"
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
@@ -78,7 +82,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="glass rounded-xl p-2.5 text-text lg:hidden"
+          className="glass touch-target shrink-0 rounded-xl text-text lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -89,38 +93,49 @@ export function Navbar() {
 
       <AnimatePresence>
         {open ? (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            className="glass mx-auto mt-2 w-[min(1200px,92%)] rounded-3xl p-6 lg:hidden"
-          >
-            <nav className="flex flex-col gap-4" aria-label="Mobile">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl px-2 py-2 text-lg text-text"
+          <>
+            <motion.button
+              type="button"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[-1] bg-bg-primary/40 backdrop-blur-[2px] lg:hidden"
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              className="glass custom-scrollbar mx-auto mt-2 max-h-[calc(100dvh-5.5rem)] w-[min(1200px,92%)] overflow-y-auto overscroll-contain rounded-3xl p-5 sm:p-6 lg:hidden"
+            >
+              <nav className="flex flex-col gap-1" aria-label="Mobile">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="touch-target rounded-xl px-3 py-2.5 text-base text-text sm:text-lg"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+              <div className="mt-5 flex items-center gap-3 border-t border-border pt-5">
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="glass touch-target rounded-xl text-subtext"
+                  aria-label="Toggle theme"
                 >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-            <div className="mt-6 flex items-center gap-3">
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="glass rounded-xl p-3 text-subtext"
-                aria-label="Toggle theme"
-              >
-                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-              <Button href="/booking" className="flex-1" onClick={() => setOpen(false)}>
-                Book Consultation
-              </Button>
-            </div>
-          </motion.div>
+                  {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+                </button>
+                <Button href="/booking" className="min-h-11 flex-1" onClick={() => setOpen(false)}>
+                  Book Consultation
+                </Button>
+              </div>
+            </motion.div>
+          </>
         ) : null}
       </AnimatePresence>
     </header>

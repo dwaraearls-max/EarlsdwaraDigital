@@ -56,7 +56,11 @@ export function SocialProfileLinks({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
-          className={cn("rounded-xl p-2.5", iconSurface, iconClassName)}
+          className={cn(
+            "touch-target rounded-xl",
+            iconSurface,
+            iconClassName,
+          )}
         >
           {icon === "instagram" ? <InstagramIcon /> : null}
           {icon === "tiktok" ? <TikTokIcon /> : null}

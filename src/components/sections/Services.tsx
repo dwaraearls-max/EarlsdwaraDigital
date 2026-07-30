@@ -60,7 +60,7 @@ export function Services() {
                   <Button
                     href={`/services/${service.slug}`}
                     variant="ghost"
-                    className="mt-5 !justify-start !px-0"
+                    className="mt-5 min-h-11 !justify-start !px-0 !py-2"
                   >
                     Learn More →
                   </Button>

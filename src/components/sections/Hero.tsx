@@ -20,7 +20,7 @@ export function Hero() {
   }, [mouse.x, mouse.y, x, y]);
 
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 md:pt-32">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 sm:pt-28 md:pt-32">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <Image
           src="/hero-handshake.png"
@@ -34,17 +34,17 @@ export function Hero() {
         <div className="hero-overlay-side absolute inset-0" />
         <div className="hero-overlay-bottom absolute inset-0" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_70%_50%,rgba(201,164,108,0.14),transparent_55%)]" />
-        <div className="orb animate-pulse-glow left-[-10%] top-[12%] h-64 w-64 bg-highlight/20 md:h-80 md:w-80" />
-        <div className="orb animate-float right-[-5%] bottom-[15%] h-56 w-56 bg-accent/15 md:h-72 md:w-72" />
+        <div className="orb animate-pulse-glow left-[-10%] top-[12%] hidden h-64 w-64 bg-highlight/20 md:block md:h-80 md:w-80" />
+        <div className="orb animate-float right-[-5%] bottom-[15%] hidden h-56 w-56 bg-accent/15 md:block md:h-72 md:w-72" />
         <motion.div className="absolute inset-0" style={{ background: spotlight }} />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-[min(1200px,92%)] flex-col items-center py-16 text-center md:items-start md:py-20 md:text-left">
+      <div className="relative z-10 mx-auto flex w-[min(1200px,92%)] flex-col items-center px-1 py-12 text-center sm:py-14 md:items-start md:py-20 md:text-left">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="glass mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium text-subtext"
+          className="glass mb-5 inline-flex max-w-[min(100%,20rem)] items-center gap-2 rounded-full px-3 py-2 text-[11px] font-medium text-subtext sm:mb-6 sm:max-w-none sm:px-4 sm:text-xs"
         >
           <Sparkles size={14} className="text-accent" />
           Premium digital studio for ambitious brands
@@ -54,7 +54,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, delay: 0.05 }}
-          className="font-display text-4xl font-semibold tracking-tight text-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl md:text-6xl lg:text-7xl"
         >
           {siteConfig.name}
         </motion.p>
@@ -63,7 +63,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.12 }}
-          className="mt-4 max-w-3xl font-display text-2xl font-medium leading-[1.15] tracking-tight text-subtext sm:text-3xl md:text-4xl lg:text-[2.75rem]"
+          className="mt-3 max-w-3xl font-display text-xl font-medium leading-[1.2] tracking-tight text-subtext sm:mt-4 sm:text-2xl md:text-4xl lg:text-[2.75rem]"
         >
           We Build Websites That{" "}
           <span className="gradient-text gradient-animate font-semibold">Grow Businesses.</span>
@@ -73,7 +73,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-6 max-w-2xl text-base leading-relaxed text-subtext md:text-lg"
+          className="mt-4 max-w-2xl text-sm leading-relaxed text-subtext sm:mt-6 sm:text-base md:text-lg"
         >
           Your website should work harder than your sales team. At Earlsdwara Digital, we create
           premium websites that convert visitors into customers.
@@ -83,7 +83,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.28 }}
-          className="mt-10 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row md:items-start"
+          className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:max-w-none sm:flex-row sm:items-center md:items-start"
         >
           <Button href="#contact" className="w-full min-w-[200px] sm:w-auto">
             Get My Website <ArrowRight size={16} />

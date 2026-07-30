@@ -46,7 +46,7 @@ export function Testimonials() {
                     <Star key={i} size={16} fill="currentColor" />
                   ))}
                 </div>
-                <blockquote className="font-display text-xl font-medium leading-relaxed text-text md:text-2xl">
+                <blockquote className="font-display text-lg font-medium leading-relaxed text-text sm:text-xl md:text-2xl">
                   “{item.quote}”
                 </blockquote>
                 <p className="mt-6 font-semibold text-text">{item.name}</p>
@@ -60,28 +60,32 @@ export function Testimonials() {
               type="button"
               aria-label="Previous testimonial"
               onClick={() => setIndex((i) => (i - 1 + testimonials.length) % testimonials.length)}
-              className="glass rounded-xl p-2.5 text-subtext transition hover:text-text"
+              className="glass touch-target rounded-xl text-subtext transition hover:text-text"
             >
               <ChevronLeft size={18} />
             </button>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               {testimonials.map((t, i) => (
                 <button
                   key={t.name}
                   type="button"
                   aria-label={`Show testimonial from ${t.name}`}
                   onClick={() => setIndex(i)}
-                  className={`h-2 w-2 rounded-full transition ${
-                    i === index ? "bg-accent" : "bg-border"
-                  }`}
-                />
+                  className="touch-target rounded-full"
+                >
+                  <span
+                    className={`block h-2.5 w-2.5 rounded-full transition ${
+                      i === index ? "bg-accent" : "bg-border"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
             <button
               type="button"
               aria-label="Next testimonial"
               onClick={() => setIndex((i) => (i + 1) % testimonials.length)}
-              className="glass rounded-xl p-2.5 text-subtext transition hover:text-text"
+              className="glass touch-target rounded-xl text-subtext transition hover:text-text"
             >
               <ChevronRight size={18} />
             </button>

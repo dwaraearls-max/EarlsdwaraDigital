@@ -13,7 +13,7 @@ export function WhatsAppChat() {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-5 right-5 z-[60] flex h-14 w-14 items-center justify-center rounded-2xl bg-[#25D366] text-white shadow-lg shadow-emerald-500/30 transition hover:scale-105 md:right-8"
+      className="fixed-safe-bottom fixed-safe-right fixed z-[60] flex h-14 w-14 items-center justify-center rounded-2xl bg-[#25D366] text-white shadow-lg shadow-emerald-500/30 transition hover:scale-105"
       aria-label="Chat on WhatsApp"
     >
       <MessageCircle size={22} />

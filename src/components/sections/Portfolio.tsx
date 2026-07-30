@@ -27,14 +27,14 @@ export function Portfolio() {
           description="Case studies from brands that chose craft over templates—and growth over guesswork."
         />
 
-        <div className="mb-10 flex flex-wrap justify-center gap-2">
+        <div className="no-scrollbar -mx-[4%] mb-10 flex gap-2 overflow-x-auto px-[4%] pb-2 sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 sm:pb-0">
           {filters.map((filter) => (
             <button
               key={filter}
               type="button"
               onClick={() => setActive(filter)}
               className={cn(
-                "rounded-full px-4 py-2 text-xs font-semibold tracking-wide transition",
+                "shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold tracking-wide transition min-h-11",
                 active === filter
                   ? "bg-gradient-to-r from-highlight to-accent text-[#081525] shadow-lg shadow-accent/30"
                   : "glass text-subtext hover:text-text",
