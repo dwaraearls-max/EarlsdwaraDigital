@@ -13,6 +13,7 @@ type ButtonProps = {
   className?: string;
   type?: "button" | "submit";
   ariaLabel?: string;
+  disabled?: boolean;
 };
 
 export function Button({
@@ -23,6 +24,7 @@ export function Button({
   className,
   type = "button",
   ariaLabel,
+  disabled,
 }: ButtonProps) {
   const pathname = usePathname();
   const classes = cn(
@@ -32,6 +34,7 @@ export function Button({
     variant === "secondary" &&
       "glass glow-btn text-text hover:border-highlight/50",
     variant === "ghost" && "text-subtext hover:text-text",
+    disabled && "pointer-events-none opacity-60",
     className,
   );
 
@@ -64,7 +67,13 @@ export function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={classes} aria-label={ariaLabel}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={classes}
+      aria-label={ariaLabel}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

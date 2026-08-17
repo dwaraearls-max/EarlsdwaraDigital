@@ -5,7 +5,7 @@ import { Logo } from "@/components/ui/Logo";
 import { SocialShare } from "@/components/features/SocialShare";
 import { siteConfig, services } from "@/lib/data";
 import { homeHashHref, scrollToHash } from "@/lib/links";
-import { buildWhatsAppUrl } from "@/lib/share";
+import { submitForm } from "@/lib/forms";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type FormEvent, useState } from "react";
@@ -13,17 +13,23 @@ import { type FormEvent, useState } from "react";
 export function Footer() {
   const pathname = usePathname();
   const [subscribed, setSubscribed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError("");
+    setSubmitting(true);
+
     const email = String(new FormData(event.currentTarget).get("email") ?? "").trim();
-    if (email) {
-      window.open(
-        buildWhatsAppUrl(`Hi Earlsdwara Digital — please add ${email} to the newsletter.`),
-        "_blank",
-        "noopener,noreferrer",
-      );
+    const result = await submitForm("/api/newsletter", { email });
+    setSubmitting(false);
+
+    if (!result.ok) {
+      setError(result.error);
+      return;
     }
+
     setSubscribed(true);
   };
 
@@ -103,11 +109,17 @@ export function Footer() {
               placeholder="you@company.com"
               className="w-full rounded-2xl surface-field px-4 py-3 text-sm text-text outline-none ring-accent placeholder:text-subtext/70 focus:ring-2"
             />
+            {error ? (
+              <p className="text-xs text-red-400" role="alert">
+                {error}
+              </p>
+            ) : null}
             <button
               type="submit"
-              className="glow-btn w-full rounded-2xl bg-gradient-to-r from-highlight to-accent px-4 py-3 text-sm font-semibold text-[#081525]"
+              disabled={submitting || subscribed}
+              className="glow-btn w-full rounded-2xl bg-gradient-to-r from-highlight to-accent px-4 py-3 text-sm font-semibold text-[#081525] disabled:opacity-60"
             >
-              {subscribed ? "You're in ✓" : "Subscribe"}
+              {subscribed ? "You're in ✓" : submitting ? "Subscribing…" : "Subscribe"}
             </button>
           </form>
           <div className="mt-6 space-y-1 text-sm text-subtext">
