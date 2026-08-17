@@ -1,8 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 import { useTheme } from "@/components/layout/ThemeProvider";
-import { navLinks, siteConfig } from "@/lib/data";
+import { navLinks } from "@/lib/data";
 import { homeHashHref, scrollToHash } from "@/lib/links";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
@@ -45,23 +46,11 @@ export function Navbar() {
           scrolled ? "glass shadow-lg shadow-black/5" : "bg-transparent",
         )}
       >
-        <Link
-          href="/"
-          className="group flex min-w-0 flex-1 items-center gap-2 sm:gap-3 sm:flex-none"
+        <Logo
+          priority
+          className="min-w-0 flex-1 sm:flex-none"
           onClick={() => setOpen(false)}
-        >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-highlight to-accent font-display text-sm font-bold text-[#081525] shadow-lg shadow-accent/30">
-            ED
-          </span>
-          <span
-            className={cn(
-              "truncate font-display text-base font-semibold tracking-tight transition group-hover:opacity-90 sm:text-xl md:text-2xl",
-              overCinema ? "text-white" : "text-text",
-            )}
-          >
-            {siteConfig.name}
-          </span>
-        </Link>
+        />
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           {navLinks.map((link) => (
