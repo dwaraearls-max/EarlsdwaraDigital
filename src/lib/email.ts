@@ -1,5 +1,6 @@
+import { EmailNotConfiguredError } from "@/lib/api/form-security";
 import { siteConfig } from "@/lib/data";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 type SendEmailInput = {
   subject: string;
@@ -7,47 +8,38 @@ type SendEmailInput = {
   text: string;
 };
 
-function getSmtpConfig() {
-  const host = process.env.SMTP_HOST;
-  const port = Number(process.env.SMTP_PORT ?? "587");
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-
-  if (!host || !user || !pass) {
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
     return null;
   }
 
-  return { host, port, user, pass };
+  return new Resend(apiKey);
 }
 
 export function isEmailConfigured() {
-  return getSmtpConfig() !== null;
+  return Boolean(process.env.RESEND_API_KEY);
 }
 
 export async function sendSiteEmail({ subject, replyTo, text }: SendEmailInput) {
-  const smtp = getSmtpConfig();
-  if (!smtp) {
-    throw new Error("Email is not configured. Set SMTP_HOST, SMTP_USER, and SMTP_PASS.");
+  const resend = getResendClient();
+  if (!resend) {
+    throw new EmailNotConfiguredError();
   }
 
   const to = process.env.CONTACT_TO ?? siteConfig.email;
-  const from = process.env.SMTP_FROM ?? smtp.user;
+  const from =
+    process.env.RESEND_FROM ?? `Earlsdwara Digital <${siteConfig.email}>`;
 
-  const transporter = nodemailer.createTransport({
-    host: smtp.host,
-    port: smtp.port,
-    secure: smtp.port === 465,
-    auth: {
-      user: smtp.user,
-      pass: smtp.pass,
-    },
-  });
-
-  await transporter.sendMail({
+  const { error } = await resend.emails.send({
     from,
-    to,
+    to: [to],
     replyTo: replyTo || undefined,
     subject,
     text,
   });
+
+  if (error) {
+    throw error;
+  }
 }

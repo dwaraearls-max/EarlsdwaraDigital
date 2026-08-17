@@ -9,6 +9,7 @@ import { submitForm } from "@/lib/forms";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type FormEvent, useState } from "react";
+import { HoneypotField } from "@/components/ui/HoneypotField";
 
 export function Footer() {
   const pathname = usePathname();
@@ -22,7 +23,10 @@ export function Footer() {
     setSubmitting(true);
 
     const email = String(new FormData(event.currentTarget).get("email") ?? "").trim();
-    const result = await submitForm("/api/newsletter", { email });
+    const result = await submitForm("/api/newsletter", {
+      email,
+      _hp: String(new FormData(event.currentTarget).get("_hp") ?? "").trim(),
+    });
     setSubmitting(false);
 
     if (!result.ok) {
@@ -97,7 +101,8 @@ export function Footer() {
           <p className="mb-4 text-sm text-subtext">
             Insights on design, conversion, and digital growth—once a month.
           </p>
-          <form onSubmit={onSubmit} className="space-y-3">
+          <form onSubmit={onSubmit} className="relative space-y-3">
+            <HoneypotField />
             <label className="sr-only" htmlFor="newsletter-email">
               Email
             </label>

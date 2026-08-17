@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { bookingServices, bookingTimes } from "@/lib/data";
 import { submitForm } from "@/lib/forms";
 import { FormEvent, useMemo, useState } from "react";
+import { HoneypotField } from "@/components/ui/HoneypotField";
 
 function formatLocalDate(date: Date) {
   const year = date.getFullYear();
@@ -38,17 +39,19 @@ export function BookingCalendar() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const onSubmit = async (event: FormEvent) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
     setSubmitting(true);
 
+    const formData = new FormData(event.currentTarget);
     const result = await submitForm("/api/booking", {
       name: name.trim(),
       email: email.trim(),
       service,
       date,
       time,
+      _hp: String(formData.get("_hp") ?? "").trim(),
     });
     setSubmitting(false);
 
@@ -81,7 +84,8 @@ export function BookingCalendar() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="glass rounded-3xl p-6 md:p-10">
+    <form onSubmit={onSubmit} className="relative glass rounded-3xl p-6 md:p-10">
+      <HoneypotField />
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="space-y-6">
           <div>

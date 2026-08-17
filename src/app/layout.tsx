@@ -1,5 +1,6 @@
 import { SiteShell } from "@/components/layout/SiteShell";
 import { siteConfig } from "@/lib/data";
+import { createOrganizationJsonLd, JsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
@@ -63,6 +64,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteConfig.url,
   },
+  category: "technology",
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export const viewport = {
@@ -71,24 +76,7 @@ export const viewport = {
   viewportFit: "cover",
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: siteConfig.name,
-  description: siteConfig.description,
-  url: siteConfig.url,
-  email: siteConfig.email,
-  telephone: siteConfig.phone,
-  slogan: siteConfig.tagline,
-  areaServed: "Worldwide",
-  serviceType: [
-    "Website Design",
-    "Web Development",
-    "E-Commerce",
-    "SEO",
-    "Website Redesign",
-  ],
-};
+const jsonLd = createOrganizationJsonLd();
 
 export default function RootLayout({
   children,
@@ -109,10 +97,7 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem("ed-theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();`,
           }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={jsonLd} />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>
