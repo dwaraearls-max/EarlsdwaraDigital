@@ -60,7 +60,7 @@ export function Hero() {
       <div className="hero-cinema__bar hero-cinema__bar--top" aria-hidden />
       <div className="hero-cinema__bar hero-cinema__bar--bottom" aria-hidden />
 
-      <div className="hero-cinema__frame absolute inset-x-0 top-[max(4.5rem,env(safe-area-inset-top))] bottom-[clamp(2.5rem,8vh,4.5rem)] mx-auto w-[min(1400px,100%)] overflow-hidden md:top-[max(5.5rem,env(safe-area-inset-top))]">
+      <div className="hero-cinema__frame pointer-events-none absolute inset-x-0 top-[max(4.5rem,env(safe-area-inset-top))] bottom-[clamp(2.5rem,8vh,4.5rem)] mx-auto w-[min(1400px,100%)] overflow-hidden md:top-[max(5.5rem,env(safe-area-inset-top))]">
         <video
           ref={videoRef}
           className="hero-cinema__video absolute inset-0 h-full w-full object-cover object-[center_38%]"
@@ -74,12 +74,12 @@ export function Hero() {
           aria-label="Earlsdwara Digital cinematic hero video"
         />
 
-        <div className="hero-cinema__grade absolute inset-0" aria-hidden />
-        <div className="hero-cinema__vignette absolute inset-0" aria-hidden />
-        <div className="hero-cinema__grain absolute inset-0" aria-hidden />
+        <div className="hero-cinema__grade pointer-events-none absolute inset-0" aria-hidden />
+        <div className="hero-cinema__vignette pointer-events-none absolute inset-0" aria-hidden />
+        <div className="hero-cinema__grain pointer-events-none absolute inset-0" aria-hidden />
 
         <motion.div
-          className="absolute inset-0 z-20 bg-[#060b12]"
+          className="pointer-events-none absolute inset-0 z-20 bg-[#060b12]"
           initial={{ opacity: 1 }}
           animate={{ opacity: ready ? 0 : 1 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
@@ -87,7 +87,7 @@ export function Hero() {
         />
 
         {/* Video controls — movie player chrome */}
-        <div className="absolute bottom-4 right-4 z-30 flex items-center gap-2 sm:bottom-5 sm:right-5">
+        <div className="pointer-events-auto absolute bottom-4 right-4 z-30 flex items-center gap-2 sm:bottom-5 sm:right-5">
           <button
             type="button"
             onClick={togglePlay}
@@ -109,7 +109,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto flex w-[min(1100px,92%)] flex-col items-center px-2 pb-8 pt-28 text-center sm:pt-32 md:items-start md:pb-12 md:pt-36 md:text-left">
+      <div className="relative z-40 mx-auto flex w-[min(1100px,92%)] flex-col items-center px-2 pb-8 pt-28 text-center sm:pt-32 md:items-start md:pb-12 md:pt-36 md:text-left">
         <motion.p
           initial={{ opacity: 0, letterSpacing: "0.4em" }}
           animate={{ opacity: 1, letterSpacing: "0.28em" }}
@@ -161,13 +161,13 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 1.45 }}
           className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:max-w-none sm:flex-row"
         >
-          <Button href="/#contact" className="w-full min-w-[200px] sm:w-auto">
+          <Button href="#contact" className="w-full min-w-[200px] sm:w-auto">
             Get My Website <ArrowRight size={16} />
           </Button>
           <Button
-            href="/#portfolio"
-            variant="secondary"
-            className="w-full min-w-[200px] border-white/25 bg-white/10 text-white hover:bg-white/20 sm:w-auto"
+            href="#portfolio"
+            variant="ghost"
+            className="w-full min-w-[200px] border border-white/25 bg-white/10 text-white backdrop-blur-md hover:bg-white/20 hover:text-white sm:w-auto"
           >
             View Portfolio
           </Button>

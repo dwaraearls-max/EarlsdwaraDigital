@@ -146,7 +146,8 @@ export const portfolio = [
     year: "2025",
     summary: "A premium storefront that lifted conversion by 41% in 90 days.",
     result: "+41% conversion",
-    image: "/portfolio/lumen-commerce.svg",
+    image:
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=80",
     color: "from-[#c9a46c]/40 to-[#0f2137]/80",
   },
   {
@@ -157,7 +158,8 @@ export const portfolio = [
     year: "2025",
     summary: "Immersive property discovery with inquiry-first UX architecture.",
     result: "3.2× more leads",
-    image: "/portfolio/aether-estates.svg",
+    image:
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
     color: "from-[#e0c08a]/35 to-[#081525]/70",
   },
   {
@@ -168,7 +170,8 @@ export const portfolio = [
     year: "2024",
     summary: "A calm, trustworthy digital campus for enrollment growth.",
     result: "+67% applications",
-    image: "/portfolio/brightpath-academy.svg",
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
     color: "from-[#a8b0ba]/30 to-[#0f2137]/80",
   },
   {
@@ -179,7 +182,8 @@ export const portfolio = [
     year: "2025",
     summary: "Reservation-focused brand site with cinematic food storytelling.",
     result: "2× bookings",
-    image: "/portfolio/harbor-dining.svg",
+    image:
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80",
     color: "from-[#c9a46c]/30 to-[#8b7355]/40",
   },
   {
@@ -190,7 +194,8 @@ export const portfolio = [
     year: "2024",
     summary: "Campaign landing system built for paid traffic and demos.",
     result: "4.8× ROAS",
-    image: "/portfolio/summit-launch.svg",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
     color: "from-[#e0c08a]/40 to-[#0f2137]/70",
   },
   {
@@ -201,7 +206,8 @@ export const portfolio = [
     year: "2024",
     summary: "A warm digital home that made giving and joining effortless.",
     result: "+85% donations",
-    image: "/portfolio/grace-community.svg",
+    image:
+      "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1200&q=80",
     color: "from-[#a8b0ba]/25 to-[#c9a46c]/20",
   },
 ];

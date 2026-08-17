@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { scrollToHash } from "@/lib/links";
 import type { MouseEvent, ReactNode } from "react";
 
 type ButtonProps = {
@@ -27,7 +26,7 @@ export function Button({
 }: ButtonProps) {
   const pathname = usePathname();
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-display text-base font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary",
+    "inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-display text-base font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary active:scale-[0.98]",
     variant === "primary" &&
       "glow-btn bg-gradient-to-r from-highlight via-accent to-[#8b7355] text-[#081525]",
     variant === "secondary" &&
@@ -39,9 +38,22 @@ export function Button({
   if (href) {
     const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
       onClick?.();
-      if (pathname === "/" && (href.startsWith("#") || href.startsWith("/#")) && scrollToHash(href)) {
-        event.preventDefault();
-      }
+
+      const hashMatch = href.match(/#([^#]+)$/);
+      if (!hashMatch) return;
+
+      const hash = hashMatch[1];
+      const pathPart = href.split("#")[0];
+      const onTargetPage = pathPart === "" || pathPart === pathname;
+
+      if (!onTargetPage) return;
+
+      const target = document.getElementById(hash);
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", `#${hash}`);
     };
 
     return (

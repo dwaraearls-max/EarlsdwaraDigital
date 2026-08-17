@@ -283,7 +283,7 @@ body {
 
 .hero-cinema__img,
 .hero-cinema__video {
-  filter: saturate(0.95) contrast(1.1) brightness(0.78);
+  filter: saturate(0.98) contrast(1.05) brightness(0.92);
   transform-origin: center center;
 }
 
@@ -295,12 +295,12 @@ body {
   background:
     linear-gradient(
       105deg,
-      rgba(6, 11, 18, 0.88) 0%,
-      rgba(6, 11, 18, 0.55) 38%,
-      rgba(6, 11, 18, 0.2) 62%,
-      rgba(6, 11, 18, 0.45) 100%
+      rgba(6, 11, 18, 0.72) 0%,
+      rgba(6, 11, 18, 0.4) 38%,
+      rgba(6, 11, 18, 0.12) 62%,
+      rgba(6, 11, 18, 0.32) 100%
     ),
-    linear-gradient(to top, rgba(6, 11, 18, 0.85) 0%, transparent 45%);
+    linear-gradient(to top, rgba(6, 11, 18, 0.65) 0%, transparent 45%);
 }
 
 .hero-cinema__vignette {
