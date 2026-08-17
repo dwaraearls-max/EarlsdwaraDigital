@@ -3,9 +3,9 @@ export const siteConfig = {
   tagline: "Building Digital Experiences That Inspire Growth.",
   description:
     "Earlsdwara Digital crafts premium websites that convert visitors into customers. Website design, custom development, e-commerce, SEO, and ongoing care for ambitious brands.",
-  url: "https://earlsdwaradigital.com",
+  url: "https://earlsdwaradigital.store",
   logo: "/logo.png",
-  email: "hello@earlsdwaradigital.com",
+  email: "hello@earlsdwaradigital.store",
   phone: "+233 24 890 7887",
   whatsapp: "233248907887",
   address: "Global · Remote-first Studio",
