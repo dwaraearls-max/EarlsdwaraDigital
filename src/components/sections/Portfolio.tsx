@@ -65,6 +65,7 @@ export function Portfolio() {
                       src={project.image}
                       alt={`${project.title} — ${project.category} project`}
                       fill
+                      unoptimized
                       sizes="(max-width: 768px) 92vw, (max-width: 1280px) 45vw, 360px"
                       className="object-cover transition duration-500 group-hover:scale-110"
                     />

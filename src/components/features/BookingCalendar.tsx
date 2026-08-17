@@ -2,16 +2,25 @@
 
 import { Button } from "@/components/ui/Button";
 import { bookingServices, bookingTimes } from "@/lib/data";
+import { buildWhatsAppUrl } from "@/lib/share";
 import { FormEvent, useMemo, useState } from "react";
+
+function formatLocalDate(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 
 function upcomingDates(count = 10) {
   const dates: string[] = [];
   const cursor = new Date();
+  cursor.setHours(12, 0, 0, 0);
   cursor.setDate(cursor.getDate() + 1);
   while (dates.length < count) {
     const day = cursor.getDay();
     if (day !== 0 && day !== 6) {
-      dates.push(cursor.toISOString().slice(0, 10));
+      dates.push(formatLocalDate(cursor));
     }
     cursor.setDate(cursor.getDate() + 1);
   }
@@ -29,6 +38,15 @@ export function BookingCalendar() {
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
+    const text = [
+      `Hi Earlsdwara Digital — I'd like to book a consultation.`,
+      `Name: ${name.trim()}`,
+      `Email: ${email.trim()}`,
+      `Service: ${service}`,
+      `Date: ${date}`,
+      `Time: ${time}`,
+    ].join("\n");
+    window.open(buildWhatsAppUrl(text), "_blank", "noopener,noreferrer");
     setConfirmed(true);
   };
 
@@ -37,12 +55,13 @@ export function BookingCalendar() {
       <div className="glass rounded-3xl p-8 text-center md:p-12">
         <p className="font-display text-3xl font-bold md:text-4xl">You’re booked.</p>
         <p className="mx-auto mt-4 max-w-lg text-subtext">
-          Confirmation sent to <span className="text-text">{email}</span>. We’ll meet for{" "}
+          We opened WhatsApp with your request for{" "}
           <span className="text-text">{service}</span> on{" "}
           <span className="text-text">
             {date} at {time}
           </span>
-          .
+          . Send the message to confirm, and we’ll reply to{" "}
+          <span className="text-text">{email}</span>.
         </p>
         <Button href="/" className="mt-8">
           Back to home

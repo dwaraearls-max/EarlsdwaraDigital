@@ -63,9 +63,9 @@ export function Hero() {
       <div className="hero-cinema__frame absolute inset-x-0 top-[max(4.5rem,env(safe-area-inset-top))] bottom-[clamp(2.5rem,8vh,4.5rem)] mx-auto w-[min(1400px,100%)] overflow-hidden md:top-[max(5.5rem,env(safe-area-inset-top))]">
         <video
           ref={videoRef}
-          className="hero-cinema__video absolute inset-0 h-full w-full object-cover object-center"
+          className="hero-cinema__video absolute inset-0 h-full w-full object-cover object-[center_38%]"
           src="/hero-video.mp4"
-          poster="/hero-handshake.png"
+          poster="/hero-poster.jpg"
           autoPlay
           muted
           loop
@@ -161,11 +161,11 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 1.45 }}
           className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:max-w-none sm:flex-row"
         >
-          <Button href="#contact" className="w-full min-w-[200px] sm:w-auto">
+          <Button href="/#contact" className="w-full min-w-[200px] sm:w-auto">
             Get My Website <ArrowRight size={16} />
           </Button>
           <Button
-            href="#portfolio"
+            href="/#portfolio"
             variant="secondary"
             className="w-full min-w-[200px] border-white/25 bg-white/10 text-white hover:bg-white/20 sm:w-auto"
           >

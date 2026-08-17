@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="BrightPath Academy">
+  <rect width="1200" height="750" fill="#0f2137"/>
+  <circle cx="980" cy="520" r="260" fill="#c9a46c" opacity="0.12"/>
+  <rect x="140" y="180" width="360" height="420" rx="24" fill="#081525" stroke="#e0c08a" stroke-opacity="0.3"/>
+  <circle cx="320" cy="320" r="70" fill="none" stroke="#c9a46c" stroke-width="8"/>
+  <path d="M290 320 L315 345 L360 290" fill="none" stroke="#e0c08a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="190" y="430" width="260" height="16" rx="8" fill="#eceef1" opacity="0.55"/>
+  <rect x="220" y="462" width="200" height="12" rx="6" fill="#a8b0ba" opacity="0.4"/>
+  <text x="560" y="300" fill="#e0c08a" font-family="Georgia, serif" font-size="22" letter-spacing="6">EDUCATION</text>
+  <text x="560" y="380" fill="#eceef1" font-family="Georgia, serif" font-size="58" font-weight="700">BrightPath Academy</text>
+  <text x="560" y="450" fill="#c9a46c" font-family="Georgia, serif" font-size="28">+67% applications</text>
+</svg>

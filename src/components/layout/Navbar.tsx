@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/Button";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { navLinks, siteConfig } from "@/lib/data";
+import { homeHashHref, scrollToHash } from "@/lib/links";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Moon, Sun, X } from "lucide-react";
@@ -66,7 +67,12 @@ export function Navbar() {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={homeHashHref(link.href, pathname)}
+              onClick={(event) => {
+                if (pathname === "/" && link.href.startsWith("#") && scrollToHash(link.href)) {
+                  event.preventDefault();
+                }
+              }}
               className={cn(
                 "text-sm transition",
                 overCinema ? "text-white/75 hover:text-white" : "text-subtext hover:text-text",
@@ -134,8 +140,13 @@ export function Navbar() {
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
+                    href={homeHashHref(link.href, pathname)}
+                    onClick={(event) => {
+                      setOpen(false);
+                      if (pathname === "/" && link.href.startsWith("#") && scrollToHash(link.href)) {
+                        event.preventDefault();
+                      }
+                    }}
                     className="touch-target rounded-xl px-3 py-2.5 text-base text-text sm:text-lg"
                   >
                     {link.label}

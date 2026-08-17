@@ -4,6 +4,7 @@ import { SocialProfileLinks } from "@/components/ui/SocialProfileLinks";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { budgetRanges, projectTypes, siteConfig } from "@/lib/data";
+import { buildWhatsAppUrl } from "@/lib/share";
 import { FormEvent, useState } from "react";
 
 export function Contact() {
@@ -11,6 +12,29 @@ export function Contact() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const business = String(data.get("business") ?? "").trim();
+    const projectType = String(data.get("projectType") ?? "").trim();
+    const budget = String(data.get("budget") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    const text = [
+      `Hi Earlsdwara Digital — I'd like a website quote.`,
+      `Name: ${name}`,
+      `Email: ${email}`,
+      phone ? `Phone: ${phone}` : null,
+      business ? `Business: ${business}` : null,
+      `Project: ${projectType}`,
+      `Budget: ${budget}`,
+      `Message: ${message}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    window.open(buildWhatsAppUrl(text), "_blank", "noopener,noreferrer");
     setSubmitted(true);
   };
 
@@ -28,7 +52,8 @@ export function Contact() {
             <div className="py-10 text-center">
               <p className="font-display text-3xl font-bold">Request received.</p>
               <p className="mt-3 text-subtext">
-                Thank you. Our team will reach out shortly to schedule your consultation.
+                Thank you. We opened WhatsApp with your details—send the message and our team will
+                follow up shortly.
               </p>
               <Button href="/booking" className="mt-8">
                 Book a time now
@@ -46,6 +71,7 @@ export function Contact() {
                 </label>
                 <select
                   id="projectType"
+                  name="projectType"
                   required
                   className="w-full rounded-2xl surface-field px-4 py-3 text-sm text-text outline-none focus:ring-2 focus:ring-accent"
                   defaultValue=""
@@ -66,6 +92,7 @@ export function Contact() {
                 </label>
                 <select
                   id="budget"
+                  name="budget"
                   required
                   className="w-full rounded-2xl surface-field px-4 py-3 text-sm text-text outline-none focus:ring-2 focus:ring-accent"
                   defaultValue=""
@@ -86,6 +113,7 @@ export function Contact() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
                   required
                   rows={5}
                   placeholder="Tell us about your goals, timeline, and vision..."

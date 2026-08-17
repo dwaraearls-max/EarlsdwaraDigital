@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
+import { scrollToHash } from "@/lib/links";
+import type { MouseEvent, ReactNode } from "react";
 
 type ButtonProps = {
   children: ReactNode;
@@ -23,6 +25,7 @@ export function Button({
   type = "button",
   ariaLabel,
 }: ButtonProps) {
+  const pathname = usePathname();
   const classes = cn(
     "inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-display text-base font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary",
     variant === "primary" &&
@@ -34,8 +37,15 @@ export function Button({
   );
 
   if (href) {
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+      onClick?.();
+      if (pathname === "/" && (href.startsWith("#") || href.startsWith("/#")) && scrollToHash(href)) {
+        event.preventDefault();
+      }
+    };
+
     return (
-      <Link href={href} className={classes} aria-label={ariaLabel} onClick={onClick}>
+      <Link href={href} className={classes} aria-label={ariaLabel} onClick={handleClick}>
         {children}
       </Link>
     );

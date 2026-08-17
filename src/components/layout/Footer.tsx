@@ -3,14 +3,26 @@
 import { SocialProfileLinks } from "@/components/ui/SocialProfileLinks";
 import { SocialShare } from "@/components/features/SocialShare";
 import { siteConfig, services } from "@/lib/data";
+import { homeHashHref, scrollToHash } from "@/lib/links";
+import { buildWhatsAppUrl } from "@/lib/share";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { type FormEvent, useState } from "react";
 
 export function Footer() {
+  const pathname = usePathname();
   const [subscribed, setSubscribed] = useState(false);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const email = String(new FormData(event.currentTarget).get("email") ?? "").trim();
+    if (email) {
+      window.open(
+        buildWhatsAppUrl(`Hi Earlsdwara Digital — please add ${email} to the newsletter.`),
+        "_blank",
+        "noopener,noreferrer",
+      );
+    }
     setSubscribed(true);
   };
 
@@ -34,31 +46,27 @@ export function Footer() {
               Quick Links
             </h3>
             <ul className="space-y-3 text-sm text-subtext">
-              <li>
-                <Link href="#about" className="hover:text-text">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="#portfolio" className="hover:text-text">
-                  Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link href="#pricing" className="hover:text-text">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="hover:text-text">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/booking" className="hover:text-text">
-                  Book a Call
-                </Link>
-              </li>
+              {[
+                ["About", "#about"],
+                ["Portfolio", "#portfolio"],
+                ["Pricing", "#pricing"],
+                ["Blog", "/blog"],
+                ["Book a Call", "/booking"],
+              ].map(([label, href]) => (
+                <li key={href}>
+                  <Link
+                    href={homeHashHref(href, pathname)}
+                    className="hover:text-text"
+                    onClick={(event) => {
+                      if (pathname === "/" && href.startsWith("#") && scrollToHash(href)) {
+                        event.preventDefault();
+                      }
+                    }}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -91,6 +99,7 @@ export function Footer() {
             </label>
             <input
               id="newsletter-email"
+              name="email"
               type="email"
               required
               placeholder="you@company.com"

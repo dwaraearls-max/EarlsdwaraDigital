@@ -146,7 +146,7 @@ export const portfolio = [
     year: "2025",
     summary: "A premium storefront that lifted conversion by 41% in 90 days.",
     result: "+41% conversion",
-    image: "/portfolio/lumen-commerce.jpg",
+    image: "/portfolio/lumen-commerce.svg",
     color: "from-[#c9a46c]/40 to-[#0f2137]/80",
   },
   {
@@ -157,7 +157,7 @@ export const portfolio = [
     year: "2025",
     summary: "Immersive property discovery with inquiry-first UX architecture.",
     result: "3.2× more leads",
-    image: "/portfolio/aether-estates.jpg",
+    image: "/portfolio/aether-estates.svg",
     color: "from-[#e0c08a]/35 to-[#081525]/70",
   },
   {
@@ -168,7 +168,7 @@ export const portfolio = [
     year: "2024",
     summary: "A calm, trustworthy digital campus for enrollment growth.",
     result: "+67% applications",
-    image: "/portfolio/brightpath-academy.jpg",
+    image: "/portfolio/brightpath-academy.svg",
     color: "from-[#a8b0ba]/30 to-[#0f2137]/80",
   },
   {
@@ -179,7 +179,7 @@ export const portfolio = [
     year: "2025",
     summary: "Reservation-focused brand site with cinematic food storytelling.",
     result: "2× bookings",
-    image: "/portfolio/harbor-dining.jpg",
+    image: "/portfolio/harbor-dining.svg",
     color: "from-[#c9a46c]/30 to-[#8b7355]/40",
   },
   {
@@ -190,7 +190,7 @@ export const portfolio = [
     year: "2024",
     summary: "Campaign landing system built for paid traffic and demos.",
     result: "4.8× ROAS",
-    image: "/portfolio/summit-launch.jpg",
+    image: "/portfolio/summit-launch.svg",
     color: "from-[#e0c08a]/40 to-[#0f2137]/70",
   },
   {
@@ -201,7 +201,7 @@ export const portfolio = [
     year: "2024",
     summary: "A warm digital home that made giving and joining effortless.",
     result: "+85% donations",
-    image: "/portfolio/grace-community.jpg",
+    image: "/portfolio/grace-community.svg",
     color: "from-[#a8b0ba]/25 to-[#c9a46c]/20",
   },
 ];

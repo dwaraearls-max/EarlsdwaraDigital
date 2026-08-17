@@ -18,6 +18,10 @@ export function getSiteSharePayload(pathname = ""): SharePayload {
   };
 }
 
+export function buildWhatsAppUrl(message: string) {
+  return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(message)}`;
+}
+
 export function buildShareLinks({ url, title, text }: SharePayload) {
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);

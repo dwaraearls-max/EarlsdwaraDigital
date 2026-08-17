@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Harbor Dining">
+  <rect width="1200" height="750" fill="#1a140f"/>
+  <ellipse cx="600" cy="330" rx="210" ry="70" fill="none" stroke="#c9a46c" stroke-width="6"/>
+  <ellipse cx="600" cy="330" rx="140" ry="40" fill="#c9a46c" opacity="0.2"/>
+  <rect x="592" y="180" width="16" height="120" rx="8" fill="#e0c08a"/>
+  <path d="M120 560 Q600 470 1080 560" fill="none" stroke="#c9a46c" stroke-width="2" opacity="0.5"/>
+  <text x="90" y="100" fill="#e0c08a" font-family="Georgia, serif" font-size="22" letter-spacing="6">RESTAURANT</text>
+  <text x="90" y="640" fill="#eceef1" font-family="Georgia, serif" font-size="64" font-weight="700">Harbor Dining</text>
+  <text x="90" y="700" fill="#c9a46c" font-family="Georgia, serif" font-size="28">2× bookings</text>
+</svg>

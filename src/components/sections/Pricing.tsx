@@ -51,7 +51,7 @@ export function Pricing() {
                 ))}
               </ul>
               <Button
-                href="#contact"
+                href="/#contact"
                 variant={plan.popular ? "primary" : "secondary"}
                 className="mt-8 w-full"
               >

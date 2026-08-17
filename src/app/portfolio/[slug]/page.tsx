@@ -42,6 +42,7 @@ export default async function PortfolioCaseStudyPage({ params }: Props) {
           alt={`${project.title} — ${project.category} project`}
           fill
           priority
+          unoptimized
           sizes="(max-width: 960px) 92vw, 960px"
           className="object-cover"
         />
