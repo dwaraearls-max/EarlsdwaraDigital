@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/Button";
 import { bookingServices, bookingTimes } from "@/lib/data";
-import { buildWhatsAppUrl } from "@/lib/share";
+import { submitForm } from "@/lib/forms";
 import { FormEvent, useMemo, useState } from "react";
 
 function formatLocalDate(date: Date) {
@@ -35,18 +35,28 @@ export function BookingCalendar() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmed, setConfirmed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const onSubmit = (event: FormEvent) => {
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const text = [
-      `Hi Earlsdwara Digital — I'd like to book a consultation.`,
-      `Name: ${name.trim()}`,
-      `Email: ${email.trim()}`,
-      `Service: ${service}`,
-      `Date: ${date}`,
-      `Time: ${time}`,
-    ].join("\n");
-    window.open(buildWhatsAppUrl(text), "_blank", "noopener,noreferrer");
+    setError("");
+    setSubmitting(true);
+
+    const result = await submitForm("/api/booking", {
+      name: name.trim(),
+      email: email.trim(),
+      service,
+      date,
+      time,
+    });
+    setSubmitting(false);
+
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+
     setConfirmed(true);
   };
 
@@ -55,12 +65,12 @@ export function BookingCalendar() {
       <div className="glass rounded-3xl p-8 text-center md:p-12">
         <p className="font-display text-3xl font-bold md:text-4xl">You’re booked.</p>
         <p className="mx-auto mt-4 max-w-lg text-subtext">
-          We opened WhatsApp with your request for{" "}
+          Your booking request for{" "}
           <span className="text-text">{service}</span> on{" "}
           <span className="text-text">
             {date} at {time}
-          </span>
-          . Send the message to confirm, and we’ll reply to{" "}
+          </span>{" "}
+          was emailed to our team. We&apos;ll confirm at{" "}
           <span className="text-text">{email}</span>.
         </p>
         <Button href="/" className="mt-8">
@@ -164,8 +174,13 @@ export function BookingCalendar() {
             </div>
           </div>
 
-          <Button type="submit" className="w-full">
-            Confirm booking
+          {error ? (
+            <p className="text-sm text-red-400" role="alert">
+              {error}
+            </p>
+          ) : null}
+          <Button type="submit" className="w-full" disabled={submitting}>
+            {submitting ? "Sending…" : "Confirm booking"}
           </Button>
         </div>
       </div>

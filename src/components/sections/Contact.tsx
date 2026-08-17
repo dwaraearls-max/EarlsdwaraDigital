@@ -4,37 +4,38 @@ import { SocialProfileLinks } from "@/components/ui/SocialProfileLinks";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { budgetRanges, projectTypes, siteConfig } from "@/lib/data";
-import { buildWhatsAppUrl } from "@/lib/share";
+import { submitForm } from "@/lib/forms";
 import { FormEvent, useState } from "react";
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError("");
+    setSubmitting(true);
+
     const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const phone = String(data.get("phone") ?? "").trim();
-    const business = String(data.get("business") ?? "").trim();
-    const projectType = String(data.get("projectType") ?? "").trim();
-    const budget = String(data.get("budget") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
+    const payload = {
+      name: String(data.get("name") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      phone: String(data.get("phone") ?? "").trim(),
+      business: String(data.get("business") ?? "").trim(),
+      projectType: String(data.get("projectType") ?? "").trim(),
+      budget: String(data.get("budget") ?? "").trim(),
+      message: String(data.get("message") ?? "").trim(),
+    };
 
-    const text = [
-      `Hi Earlsdwara Digital — I'd like a website quote.`,
-      `Name: ${name}`,
-      `Email: ${email}`,
-      phone ? `Phone: ${phone}` : null,
-      business ? `Business: ${business}` : null,
-      `Project: ${projectType}`,
-      `Budget: ${budget}`,
-      `Message: ${message}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+    const result = await submitForm("/api/contact", payload);
+    setSubmitting(false);
 
-    window.open(buildWhatsAppUrl(text), "_blank", "noopener,noreferrer");
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+
     setSubmitted(true);
   };
 
@@ -52,8 +53,7 @@ export function Contact() {
             <div className="py-10 text-center">
               <p className="font-display text-3xl font-bold">Request received.</p>
               <p className="mt-3 text-subtext">
-                Thank you. We opened WhatsApp with your details—send the message and our team will
-                follow up shortly.
+                Thank you. Your quote request was emailed to our team—we&apos;ll reply to you shortly.
               </p>
               <Button href="/booking" className="mt-8">
                 Book a time now
@@ -120,9 +120,14 @@ export function Contact() {
                   className="w-full resize-none rounded-2xl surface-field px-4 py-3 text-sm text-text outline-none placeholder:text-subtext/60 focus:ring-2 focus:ring-accent"
                 />
               </div>
+              {error ? (
+                <p className="text-sm text-red-400 md:col-span-2" role="alert">
+                  {error}
+                </p>
+              ) : null}
               <div className="flex flex-col gap-3 md:col-span-2 md:flex-row">
-                <Button type="submit" className="flex-1">
-                  Request Quote
+                <Button type="submit" className="flex-1" disabled={submitting}>
+                  {submitting ? "Sending…" : "Request Quote"}
                 </Button>
                 <Button href="/booking" variant="secondary" className="flex-1">
                   Book Consultation
