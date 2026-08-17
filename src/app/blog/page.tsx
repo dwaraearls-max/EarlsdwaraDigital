@@ -1,12 +1,14 @@
 import { blogPosts } from "@/lib/data";
+import { createShareMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createShareMetadata({
   title: "Insights & Blog",
   description:
     "Ideas on premium web design, conversion, SEO, and digital growth from Earlsdwara Digital.",
-};
+  path: "/blog",
+});
 
 export default function BlogPage() {
   return (

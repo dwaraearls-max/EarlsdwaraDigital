@@ -1,11 +1,13 @@
 import { BookingCalendar } from "@/components/features/BookingCalendar";
+import { createShareMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createShareMetadata({
   title: "Book a Consultation",
   description:
-    "Book a consultation with Earlsdwara Digital. Choose your service, pick a date and time, and receive instant confirmation.",
-};
+    "Book a consultation with Earlsdwara Digital. Choose your service, pick a date and time, and receive confirmation by email.",
+  path: "/booking",
+});
 
 export default function BookingPage() {
   return (

@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { services } from "@/lib/data";
+import { createShareMetadata } from "@/lib/metadata";
+import { createServiceJsonLd, JsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -13,10 +15,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const service = services.find((item) => item.slug === slug);
   if (!service) return {};
-  return {
+  return createShareMetadata({
     title: service.title,
     description: service.description,
-  };
+    path: `/services/${slug}`,
+  });
 }
 
 export default async function ServicePage({ params }: Props) {
@@ -26,6 +29,13 @@ export default async function ServicePage({ params }: Props) {
 
   return (
     <section className="mx-auto w-[min(860px,92%)] pb-24 pt-32 md:pt-36">
+      <JsonLd
+        data={createServiceJsonLd({
+          title: service.title,
+          description: service.description,
+          path: `/services/${slug}`,
+        })}
+      />
       <p className="text-xs uppercase tracking-[0.25em] text-accent">Service</p>
       <h1 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
         {service.title}

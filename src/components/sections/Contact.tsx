@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { budgetRanges, projectTypes, siteConfig } from "@/lib/data";
 import { submitForm } from "@/lib/forms";
 import { FormEvent, useState } from "react";
+import { HoneypotField } from "@/components/ui/HoneypotField";
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -26,6 +27,7 @@ export function Contact() {
       projectType: String(data.get("projectType") ?? "").trim(),
       budget: String(data.get("budget") ?? "").trim(),
       message: String(data.get("message") ?? "").trim(),
+      _hp: String(data.get("_hp") ?? "").trim(),
     };
 
     const result = await submitForm("/api/contact", payload);
@@ -60,7 +62,8 @@ export function Contact() {
               </Button>
             </div>
           ) : (
-            <form onSubmit={onSubmit} className="grid gap-5 md:grid-cols-2">
+            <form onSubmit={onSubmit} className="relative grid gap-5 md:grid-cols-2">
+              <HoneypotField />
               <Field label="Name" id="name" required />
               <Field label="Email" id="email" type="email" required />
               <Field label="Phone" id="phone" type="tel" />

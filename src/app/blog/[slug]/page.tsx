@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { SocialShare } from "@/components/features/SocialShare";
 import { blogPosts } from "@/lib/data";
 import { createShareMetadata } from "@/lib/metadata";
+import { createArticleJsonLd, JsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -29,6 +30,15 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <article className="mx-auto w-[min(760px,92%)] pb-24 pt-32 md:pt-36">
+      <JsonLd
+        data={createArticleJsonLd({
+          title: post.title,
+          description: post.excerpt,
+          path: `/blog/${slug}`,
+          datePublished: post.date,
+          category: post.category,
+        })}
+      />
       <p className="text-xs uppercase tracking-[0.25em] text-accent">{post.category}</p>
       <h1 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">{post.title}</h1>
       <p className="mt-4 text-sm text-subtext">

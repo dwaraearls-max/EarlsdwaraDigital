@@ -1,11 +1,13 @@
 import { ProjectCalculator } from "@/components/features/ProjectCalculator";
+import { createShareMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createShareMetadata({
   title: "Project Cost Estimator",
   description:
     "Get an instant website cost estimate with the Earlsdwara Digital project calculator.",
-};
+  path: "/calculator",
+});
 
 export default function CalculatorPage() {
   return (
