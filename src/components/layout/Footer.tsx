@@ -1,6 +1,7 @@
 "use client";
 
 import { SocialProfileLinks } from "@/components/ui/SocialProfileLinks";
+import { Logo } from "@/components/ui/Logo";
 import { SocialShare } from "@/components/features/SocialShare";
 import { siteConfig, services } from "@/lib/data";
 import { homeHashHref, scrollToHash } from "@/lib/links";
@@ -30,11 +31,8 @@ export function Footer() {
     <footer className="relative mt-24 border-t border-border bg-bg-secondary/80">
       <div className="mx-auto grid w-[min(1200px,92%)] gap-8 px-0 py-12 sm:gap-10 sm:py-14 md:grid-cols-2 md:py-16 lg:grid-cols-4">
         <div className="lg:col-span-1">
-          <div className="mb-4 flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-highlight to-accent font-display text-sm font-bold text-[#081525]">
-              ED
-            </span>
-            <span className="font-display text-xl font-semibold sm:text-2xl">{siteConfig.name}</span>
+          <div className="mb-4">
+            <Logo imageClassName="max-h-16 sm:max-h-[4.5rem]" />
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-subtext">{siteConfig.tagline}</p>
           <SocialProfileLinks className="mt-6" />

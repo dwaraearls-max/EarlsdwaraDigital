@@ -4,6 +4,7 @@ export const siteConfig = {
   description:
     "Earlsdwara Digital crafts premium websites that convert visitors into customers. Website design, custom development, e-commerce, SEO, and ongoing care for ambitious brands.",
   url: "https://earlsdwaradigital.com",
+  logo: "/logo.png",
   email: "hello@earlsdwaradigital.com",
   phone: "+233 24 890 7887",
   whatsapp: "233248907887",
