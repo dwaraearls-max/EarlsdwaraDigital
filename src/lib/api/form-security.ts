@@ -15,6 +15,13 @@ export class EmailNotConfiguredError extends Error {
   }
 }
 
+export class SendEmailError extends Error {
+  constructor() {
+    super("Send email failed");
+    this.name = "SendEmailError";
+  }
+}
+
 export class FormValidationError extends Error {
   constructor(message: string) {
     super(message);

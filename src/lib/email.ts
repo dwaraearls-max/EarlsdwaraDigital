@@ -1,4 +1,4 @@
-import { EmailNotConfiguredError } from "@/lib/api/form-security";
+import { EmailNotConfiguredError, SendEmailError } from "@/lib/api/form-security";
 import { siteConfig } from "@/lib/data";
 import { Resend } from "resend";
 
@@ -29,7 +29,8 @@ export async function sendSiteEmail({ subject, replyTo, text }: SendEmailInput) 
 
   const to = process.env.CONTACT_TO ?? siteConfig.email;
   const from =
-    process.env.RESEND_FROM ?? `Earlsdwara Digital <${siteConfig.email}>`;
+    process.env.RESEND_FROM ??
+    "Earlsdwara Digital <onboarding@resend.dev>";
 
   const { error } = await resend.emails.send({
     from,
@@ -40,6 +41,7 @@ export async function sendSiteEmail({ subject, replyTo, text }: SendEmailInput) 
   });
 
   if (error) {
-    throw error;
+    console.error("Resend send failed:", error);
+    throw new SendEmailError();
   }
 }

@@ -124,9 +124,18 @@ export function Contact() {
                 />
               </div>
               {error ? (
-                <p className="text-sm text-red-400 md:col-span-2" role="alert">
-                  {error}
-                </p>
+                <div className="md:col-span-2" role="alert">
+                  <p className="text-sm text-red-400">{error}</p>
+                  <p className="mt-2 text-sm text-subtext">
+                    Or email us directly at{" "}
+                    <a
+                      href={`mailto:${siteConfig.email}`}
+                      className="text-text underline-offset-2 hover:underline"
+                    >
+                      {siteConfig.email}
+                    </a>
+                  </p>
+                </div>
               ) : null}
               <div className="flex flex-col gap-3 md:col-span-2 md:flex-row">
                 <Button type="submit" className="flex-1" disabled={submitting}>
