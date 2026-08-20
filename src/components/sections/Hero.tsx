@@ -1,7 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
+import { useWebsitePromo } from "@/hooks/useWebsitePromo";
 import { siteConfig } from "@/lib/data";
+import { getPromoPriceLabel, websitePromo } from "@/lib/promo";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ArrowRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
@@ -12,6 +14,7 @@ export function Hero() {
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
   const [ready, setReady] = useState(false);
+  const { visible: promoVisible, status: promoStatus } = useWebsitePromo();
 
   useEffect(() => {
     const video = videoRef.current;
@@ -60,7 +63,7 @@ export function Hero() {
       <div className="hero-cinema__bar hero-cinema__bar--top" aria-hidden />
       <div className="hero-cinema__bar hero-cinema__bar--bottom" aria-hidden />
 
-      <div className="hero-cinema__frame pointer-events-none absolute inset-x-0 top-[max(4.5rem,env(safe-area-inset-top))] bottom-[clamp(2.5rem,8vh,4.5rem)] mx-auto w-[min(1400px,100%)] overflow-hidden md:top-[max(5.5rem,env(safe-area-inset-top))]">
+      <div className="hero-cinema__frame pointer-events-none absolute inset-x-0 top-[max(calc(4.5rem+var(--promo-banner-height,0px)),calc(env(safe-area-inset-top)+var(--promo-banner-height,0px)))] bottom-[clamp(2.5rem,8vh,4.5rem)] mx-auto w-[min(1400px,100%)] overflow-hidden md:top-[max(calc(5.5rem+var(--promo-banner-height,0px)),calc(env(safe-area-inset-top)+var(--promo-banner-height,0px)))]">
         <video
           ref={videoRef}
           className="hero-cinema__video absolute inset-0 h-full w-full object-cover object-[center_38%]"
@@ -109,14 +112,16 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative z-40 mx-auto flex w-[min(1100px,92%)] flex-col items-center px-2 pb-8 pt-28 text-center sm:pt-32 md:items-start md:pb-12 md:pt-36 md:text-left">
+      <div className="relative z-40 mx-auto flex w-[min(1100px,92%)] flex-col items-center px-2 pb-8 pt-[calc(7rem+var(--promo-banner-height,0px))] text-center sm:pt-[calc(8rem+var(--promo-banner-height,0px))] md:items-start md:pb-12 md:pt-[calc(9rem+var(--promo-banner-height,0px))] md:text-left">
         <motion.p
           initial={{ opacity: 0, letterSpacing: "0.4em" }}
           animate={{ opacity: 1, letterSpacing: "0.28em" }}
           transition={{ duration: 1.1, delay: 0.5 }}
           className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#e0c08a] sm:mb-5 sm:text-xs"
         >
-          Now playing · Earlsdwara Digital
+          {promoVisible
+            ? `August promo · ${websitePromo.shortRange} · ${getPromoPriceLabel()}`
+            : "Now playing · Earlsdwara Digital"}
         </motion.p>
 
         <motion.p
@@ -152,7 +157,9 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 1.3 }}
           className="mt-4 max-w-xl text-sm leading-relaxed text-white/70 sm:mt-5 sm:text-base"
         >
-          Premium websites that convert visitors into customers—crafted for brands that refuse to look average.
+          {promoVisible
+            ? `${promoStatus === "upcoming" ? "From 21 August" : "This August"}, pick your website type, enter the details, and we’ll build it for ${getPromoPriceLabel()}.`
+            : "Premium websites that convert visitors into customers—crafted for brands that refuse to look average."}
         </motion.p>
 
         <motion.div
@@ -161,8 +168,16 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 1.45 }}
           className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:max-w-none sm:flex-row"
         >
-          <Button href="#contact" className="w-full min-w-[200px] sm:w-auto">
-            Get My Website <ArrowRight size={16} />
+          <Button href={promoVisible ? "#promo" : "#contact"} className="w-full min-w-[200px] sm:w-auto">
+            {promoVisible ? (
+              <>
+                Start my website <ArrowRight size={16} />
+              </>
+            ) : (
+              <>
+                Get My Website <ArrowRight size={16} />
+              </>
+            )}
           </Button>
           <Button
             href="#portfolio"

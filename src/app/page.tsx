@@ -5,6 +5,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Portfolio } from "@/components/sections/Portfolio";
 import { Pricing } from "@/components/sections/Pricing";
 import { Process } from "@/components/sections/Process";
+import { Promo } from "@/components/sections/Promo";
 import { Services } from "@/components/sections/Services";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { TrustedBy } from "@/components/sections/TrustedBy";
@@ -17,6 +18,7 @@ export default function Home() {
       <TrustedBy />
       <About />
       <Services />
+      <Promo />
       <WhyChooseUs />
       <Portfolio />
       <Process />

@@ -1,3 +1,4 @@
+import { PromoCallout } from "@/components/features/PromoCallout";
 import { ProjectCalculator } from "@/components/features/ProjectCalculator";
 import { createShareMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
@@ -11,7 +12,7 @@ export const metadata: Metadata = createShareMetadata({
 
 export default function CalculatorPage() {
   return (
-    <section className="mx-auto w-[min(1100px,92%)] pb-24 pt-32 md:pt-36">
+    <section className="page-pad-top mx-auto w-[min(1100px,92%)] pb-24">
       <div className="mb-10 max-w-2xl">
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">
           Cost estimator
@@ -22,6 +23,9 @@ export default function CalculatorPage() {
         <p className="mt-4 text-subtext">
           Configure your project scope and generate a premium starting estimate in seconds.
         </p>
+      </div>
+      <div className="mb-8">
+        <PromoCallout compact />
       </div>
       <ProjectCalculator />
     </section>

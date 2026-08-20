@@ -1,6 +1,8 @@
+import { PromoCallout } from "@/components/features/PromoCallout";
 import { Button } from "@/components/ui/Button";
 import { services } from "@/lib/data";
 import { createShareMetadata } from "@/lib/metadata";
+import { isPromoVisible, isPromoWebsiteService, promoFormPath } from "@/lib/promo";
 import { createServiceJsonLd, JsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -27,8 +29,10 @@ export default async function ServicePage({ params }: Props) {
   const service = services.find((item) => item.slug === slug);
   if (!service) notFound();
 
+  const promoLive = isPromoVisible();
+
   return (
-    <section className="mx-auto w-[min(860px,92%)] pb-24 pt-32 md:pt-36">
+    <section className="page-pad-top mx-auto w-[min(860px,92%)] pb-24">
       <JsonLd
         data={createServiceJsonLd({
           title: service.title,
@@ -41,6 +45,15 @@ export default async function ServicePage({ params }: Props) {
         {service.title}
       </h1>
       <p className="mt-5 text-lg text-subtext">{service.description}</p>
+      {isPromoWebsiteService(service.slug) ? (
+        <div className="mt-8">
+          <PromoCallout />
+        </div>
+      ) : (
+        <div className="mt-8">
+          <PromoCallout compact />
+        </div>
+      )}
       <div className="glass mt-10 rounded-3xl p-6 leading-relaxed text-subtext md:p-10">
         <p>{service.details}</p>
         <p className="mt-4">
@@ -49,7 +62,9 @@ export default async function ServicePage({ params }: Props) {
         </p>
       </div>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-        <Button href="/booking">Book consultation</Button>
+        <Button href={promoLive ? promoFormPath : "/booking"}>
+          {promoLive ? "Start my website" : "Book consultation"}
+        </Button>
         <Button href="/calculator" variant="secondary">
           Estimate cost
         </Button>

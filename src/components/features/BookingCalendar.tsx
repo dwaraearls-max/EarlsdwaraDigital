@@ -1,10 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
+import { HoneypotField } from "@/components/ui/HoneypotField";
+import { useWebsitePromo } from "@/hooks/useWebsitePromo";
 import { bookingServices, bookingTimes } from "@/lib/data";
 import { submitForm } from "@/lib/forms";
+import { getPromoPriceLabel, websitePromo } from "@/lib/promo";
 import { FormEvent, useMemo, useState } from "react";
-import { HoneypotField } from "@/components/ui/HoneypotField";
 
 function formatLocalDate(date: Date) {
   const year = date.getFullYear();
@@ -30,7 +32,10 @@ function upcomingDates(count = 10) {
 
 export function BookingCalendar() {
   const dates = useMemo(() => upcomingDates(), []);
-  const [service, setService] = useState(bookingServices[0]);
+  const { visible: promoVisible } = useWebsitePromo();
+  const promoService = `${websitePromo.name} (${getPromoPriceLabel()})`;
+  const services = promoVisible ? [promoService, ...bookingServices] : bookingServices;
+  const [service, setService] = useState(services[0]);
   const [date, setDate] = useState(dates[0]);
   const [time, setTime] = useState(bookingTimes[2]);
   const [name, setName] = useState("");
@@ -91,7 +96,7 @@ export function BookingCalendar() {
           <div>
             <label className="mb-3 block text-sm text-subtext">Choose service</label>
             <div className="grid gap-2">
-              {bookingServices.map((item) => (
+              {services.map((item) => (
                 <button
                   key={item}
                   type="button"

@@ -12,8 +12,8 @@ export function ScrollProgress() {
 
   return (
     <motion.div
-      className="fixed left-0 right-0 top-0 z-[80] h-[3px] origin-left bg-gradient-to-r from-highlight via-accent to-[#8b7355]"
-      style={{ scaleX }}
+      className="fixed left-0 right-0 z-[80] h-[3px] origin-left bg-gradient-to-r from-highlight via-accent to-[#8b7355]"
+      style={{ top: "var(--promo-banner-height, 0px)", scaleX }}
       aria-hidden
     />
   );

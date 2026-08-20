@@ -1,17 +1,22 @@
 "use client";
 
+import { PromoCallout } from "@/components/features/PromoCallout";
 import { SocialProfileLinks } from "@/components/ui/SocialProfileLinks";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { HoneypotField } from "@/components/ui/HoneypotField";
+import { useWebsitePromo } from "@/hooks/useWebsitePromo";
 import { budgetRanges, projectTypes, siteConfig } from "@/lib/data";
 import { submitForm } from "@/lib/forms";
+import { getPromoBudgetOption, getPromoPriceLabel } from "@/lib/promo";
 import { FormEvent, useState } from "react";
-import { HoneypotField } from "@/components/ui/HoneypotField";
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const { visible: promoVisible } = useWebsitePromo();
+  const budgets = promoVisible ? [getPromoBudgetOption(), ...budgetRanges] : budgetRanges;
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,8 +52,18 @@ export function Contact() {
         <SectionHeading
           eyebrow="Contact"
           title="Let’s build something unforgettable"
-          description="Tell us about your vision. We’ll respond with clarity, next steps, and a tailored recommendation."
+          description={
+            promoVisible
+              ? `August promo: every website type is ${getPromoPriceLabel()} from 21–31 August. Choose your type and enter the details, or send the form below.`
+              : "Tell us about your vision. We’ll respond with clarity, next steps, and a tailored recommendation."
+          }
         />
+
+        {promoVisible ? (
+          <div className="mb-6">
+            <PromoCallout compact />
+          </div>
+        ) : null}
 
         <div className="glass rounded-3xl p-4 sm:p-6 md:p-10">
           {submitted ? (
@@ -103,7 +118,7 @@ export function Contact() {
                   <option value="" disabled>
                     Select a budget range
                   </option>
-                  {budgetRanges.map((range) => (
+                  {budgets.map((range) => (
                     <option key={range} value={range} className="bg-bg-secondary">
                       {range}
                     </option>

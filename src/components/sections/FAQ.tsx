@@ -1,13 +1,20 @@
 "use client";
 
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { useWebsitePromo } from "@/hooks/useWebsitePromo";
 import { faqs } from "@/lib/data";
+import { websitePromo } from "@/lib/promo";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
+  const { visible } = useWebsitePromo();
+  const items = useMemo(
+    () => (visible ? [websitePromo.faq, ...faqs] : faqs),
+    [visible],
+  );
 
   return (
     <section id="faq" className="relative scroll-mt-28 py-20 md:py-28">
@@ -19,7 +26,7 @@ export function FAQ() {
         />
 
         <div className="space-y-3">
-          {faqs.map((faq, index) => {
+          {items.map((faq, index) => {
             const isOpen = open === index;
             return (
               <div key={faq.question} className="glass overflow-hidden rounded-2xl">

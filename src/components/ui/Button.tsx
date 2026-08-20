@@ -39,6 +39,23 @@ export function Button({
   );
 
   if (href) {
+    const isExternal = /^https?:\/\//.test(href);
+
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          className={classes}
+          aria-label={ariaLabel}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => onClick?.()}
+        >
+          {children}
+        </a>
+      );
+    }
+
     const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
       onClick?.();
 

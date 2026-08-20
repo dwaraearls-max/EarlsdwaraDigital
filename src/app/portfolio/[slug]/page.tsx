@@ -29,7 +29,7 @@ export default async function PortfolioCaseStudyPage({ params }: Props) {
   if (!project) notFound();
 
   return (
-    <section className="mx-auto w-[min(960px,92%)] pb-24 pt-32 md:pt-36">
+    <section className="page-pad-top mx-auto w-[min(960px,92%)] pb-24">
       <p className="text-xs uppercase tracking-[0.25em] text-accent">{project.category}</p>
       <h1 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-6xl">
         {project.title}

@@ -1,5 +1,6 @@
 "use client";
 
+import { getPromoPriceLabel, getPromoStatus } from "@/lib/promo";
 import { AnimatePresence, motion } from "framer-motion";
 import { Send, X } from "lucide-react";
 import { FormEvent, useState } from "react";
@@ -15,10 +16,26 @@ const starter: Message[] = [
 
 function replyTo(input: string): string {
   const text = input.toLowerCase();
-  if (text.includes("price") || text.includes("cost") || text.includes("quote")) {
+  const promoStatus = getPromoStatus();
+  if (
+    text.includes("price") ||
+    text.includes("cost") ||
+    text.includes("quote") ||
+    text.includes("promo") ||
+    text.includes("offer")
+  ) {
+    if (promoStatus === "active") {
+      return `August promo is live: every website type is ${getPromoPriceLabel()} through 31 August. Go to /promo, choose your website type, enter the details, and send the brief on WhatsApp.`;
+    }
+    if (promoStatus === "upcoming") {
+      return `From 21–31 August, every website type is ${getPromoPriceLabel()}. Go to /promo to choose your type and enter the details we need to build it.`;
+    }
     return "Our Starter plan begins at GH₵5,000, Professional at GH₵10,000, and Enterprise from GH₵20,000. Want a tailored estimate? Try /calculator or book a call.";
   }
   if (text.includes("book") || text.includes("consult") || text.includes("call")) {
+    if (promoStatus === "active" || promoStatus === "upcoming") {
+      return `To claim the August ${getPromoPriceLabel()} website promo, go to /promo, choose your website type, and enter the details. We’ll receive the brief on WhatsApp.`;
+    }
     return "Perfect—head to /booking to choose a service, date, and time. You’ll get an instant confirmation.";
   }
   if (text.includes("seo") || text.includes("speed") || text.includes("redesign")) {

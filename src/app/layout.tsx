@@ -35,6 +35,10 @@ export const metadata: Metadata = {
     "UI UX design",
   ],
   authors: [{ name: "Earlsdwara Digital" }],
+  icons: {
+    icon: [{ url: siteConfig.logo, type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -47,7 +51,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+        alt: `${siteConfig.name} logo — ${siteConfig.tagline}`,
       },
     ],
   },
@@ -86,17 +90,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="light"
+      data-theme="dark"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${cormorant.variable} ${libre.variable} h-full`}
     >
       <body suppressHydrationWarning className="flex min-h-full flex-col antialiased">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("ed-theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();`,
-          }}
-        />
         <JsonLd data={jsonLd} />
         <SiteShell>{children}</SiteShell>
       </body>

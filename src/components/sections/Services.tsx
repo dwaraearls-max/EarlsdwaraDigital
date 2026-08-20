@@ -3,7 +3,9 @@
 import { Button } from "@/components/ui/Button";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { useWebsitePromo } from "@/hooks/useWebsitePromo";
 import { services } from "@/lib/data";
+import { getPromoPriceLabel, isPromoWebsiteService } from "@/lib/promo";
 import { motion } from "framer-motion";
 import {
   Code2,
@@ -29,6 +31,8 @@ const icons: Record<string, LucideIcon> = {
 };
 
 export function Services() {
+  const { visible } = useWebsitePromo();
+
   return (
     <section id="services" className="relative scroll-mt-28 py-20 md:py-28">
       <div className="mx-auto w-[min(1200px,92%)]">
@@ -49,7 +53,12 @@ export function Services() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
               >
-                <GlassCard className="group flex h-full flex-col">
+                <GlassCard className="group relative flex h-full flex-col">
+                  {visible && isPromoWebsiteService(service.slug) ? (
+                    <span className="absolute right-5 top-5 rounded-full bg-accent/20 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-highlight">
+                      {getPromoPriceLabel()}
+                    </span>
+                  ) : null}
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-highlight/30 to-accent/20 text-accent transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(201,164,108,0.35)]">
                     <Icon size={22} />
                   </div>

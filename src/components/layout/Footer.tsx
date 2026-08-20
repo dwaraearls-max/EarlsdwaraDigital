@@ -3,9 +3,11 @@
 import { SocialProfileLinks } from "@/components/ui/SocialProfileLinks";
 import { Logo } from "@/components/ui/Logo";
 import { SocialShare } from "@/components/features/SocialShare";
+import { useWebsitePromo } from "@/hooks/useWebsitePromo";
 import { siteConfig, services } from "@/lib/data";
 import { homeHashHref, scrollToHash } from "@/lib/links";
 import { submitForm } from "@/lib/forms";
+import { promoFormPath } from "@/lib/promo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type FormEvent, useState } from "react";
@@ -16,6 +18,7 @@ export function Footer() {
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const { visible: promoVisible } = useWebsitePromo();
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -58,23 +61,38 @@ export function Footer() {
                 ["About", "#about"],
                 ["Portfolio", "#portfolio"],
                 ["Pricing", "#pricing"],
+                ...(promoVisible ? [["August Promo", promoFormPath] as const] : []),
                 ["Blog", "/blog"],
                 ["Book a Call", "/booking"],
-              ].map(([label, href]) => (
+              ].map(([label, href]) => {
+                const external = href.startsWith("http");
+                return (
                 <li key={href}>
-                  <Link
-                    href={homeHashHref(href, pathname)}
-                    className="hover:text-text"
-                    onClick={(event) => {
-                      if (pathname === "/" && href.startsWith("#") && scrollToHash(href)) {
-                        event.preventDefault();
-                      }
-                    }}
-                  >
-                    {label}
-                  </Link>
+                  {external ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-text"
+                    >
+                      {label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={homeHashHref(href, pathname)}
+                      className="hover:text-text"
+                      onClick={(event) => {
+                        if (pathname === "/" && href.startsWith("#") && scrollToHash(href)) {
+                          event.preventDefault();
+                        }
+                      }}
+                    >
+                      {label}
+                    </Link>
+                  )}
                 </li>
-              ))}
+                );
+              })}
             </ul>
           </div>
 

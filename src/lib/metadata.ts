@@ -26,7 +26,7 @@ export function createShareMetadata({ title, description, path }: PageShareOptio
           url: "/opengraph-image",
           width: 1200,
           height: 630,
-          alt: `${title} | ${siteConfig.name}`,
+          alt: `${siteConfig.name} logo — ${title}`,
         },
       ],
     },

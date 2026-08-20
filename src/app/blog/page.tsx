@@ -12,7 +12,7 @@ export const metadata: Metadata = createShareMetadata({
 
 export default function BlogPage() {
   return (
-    <section className="mx-auto w-[min(1000px,92%)] pb-24 pt-32 md:pt-36">
+    <section className="page-pad-top mx-auto w-[min(1000px,92%)] pb-24">
       <div className="mb-12 max-w-2xl">
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent">Blog</p>
         <h1 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">

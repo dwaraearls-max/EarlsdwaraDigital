@@ -57,7 +57,7 @@ export function SocialProfileLinks({
           rel="noopener noreferrer"
           aria-label={label}
           className={cn(
-            "touch-target rounded-xl",
+            "touch-target rounded-xl p-2.5",
             iconSurface,
             iconClassName,
           )}

@@ -1,12 +1,10 @@
 "use client";
 
-import { siteConfig } from "@/lib/data";
+import { buildWhatsAppUrl } from "@/lib/share";
 import { MessageCircle } from "lucide-react";
 
 export function WhatsAppChat() {
-  const href = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(
-    "Hi Earlsdwara Digital — I’d like to discuss a website project.",
-  )}`;
+  const href = buildWhatsAppUrl("Hi Earlsdwara Digital — I’d like to discuss a website project.");
 
   return (
     <a

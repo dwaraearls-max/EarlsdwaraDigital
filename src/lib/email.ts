@@ -9,7 +9,7 @@ type SendEmailInput = {
 };
 
 function getResendClient() {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
     return null;
   }
@@ -27,10 +27,10 @@ export async function sendSiteEmail({ subject, replyTo, text }: SendEmailInput) 
     throw new EmailNotConfiguredError();
   }
 
-  const to = process.env.CONTACT_TO ?? siteConfig.email;
-  const from =
-    process.env.RESEND_FROM ??
-    "Earlsdwara Digital <onboarding@resend.dev>";
+  const to = (process.env.CONTACT_TO ?? siteConfig.email).trim();
+  const from = (
+    process.env.RESEND_FROM ?? "Earlsdwara Digital <onboarding@resend.dev>"
+  ).trim();
 
   const { error } = await resend.emails.send({
     from,

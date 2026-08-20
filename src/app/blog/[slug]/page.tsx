@@ -29,7 +29,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   return (
-    <article className="mx-auto w-[min(760px,92%)] pb-24 pt-32 md:pt-36">
+    <article className="page-pad-top mx-auto w-[min(760px,92%)] pb-24">
       <JsonLd
         data={createArticleJsonLd({
           title: post.title,

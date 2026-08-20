@@ -2,12 +2,13 @@
 
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
-import { useTheme } from "@/components/layout/ThemeProvider";
+import { useWebsitePromo } from "@/hooks/useWebsitePromo";
 import { navLinks } from "@/lib/data";
 import { homeHashHref, scrollToHash } from "@/lib/links";
+import { getPromoEntryHref, getPromoPriceLabel } from "@/lib/promo";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,8 +16,8 @@ import { useEffect, useState } from "react";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
+  const { visible: promoVisible } = useWebsitePromo();
   const overCinema = pathname === "/" && !scrolled && !open;
 
   useEffect(() => {
@@ -36,9 +37,10 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "safe-top fixed inset-x-0 top-0 z-[70] transition-all duration-500",
+        "safe-top fixed inset-x-0 z-[70] transition-all duration-500",
         scrolled ? "py-2 md:py-3" : "py-3 md:py-5",
       )}
+      style={{ top: "var(--promo-banner-height, 0px)" }}
     >
       <div
         className={cn(
@@ -70,24 +72,27 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
+          {promoVisible ? (
+            <Link
+              href={getPromoEntryHref(pathname)}
+              onClick={(event) => {
+                if (pathname === "/" && scrollToHash("#promo")) {
+                  event.preventDefault();
+                }
+              }}
+              className={cn(
+                "text-sm font-semibold transition",
+                overCinema ? "text-[#e0c08a] hover:text-white" : "text-accent hover:text-highlight",
+              )}
+            >
+              Promo
+            </Link>
+          ) : null}
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className={cn(
-              "touch-target rounded-xl transition",
-              overCinema
-                ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
-                : "glass text-subtext hover:text-text",
-            )}
-            aria-label="Toggle theme"
-          >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-          <Button href="/booking" className="!py-2.5 !text-xs">
-            Book Consultation
+          <Button href={promoVisible ? getPromoEntryHref(pathname) : "/booking"} className="!py-2.5 !text-xs">
+            {promoVisible ? `Get ${getPromoPriceLabel()} Site` : "Book Consultation"}
           </Button>
         </div>
 
@@ -141,18 +146,28 @@ export function Navbar() {
                     {link.label}
                   </Link>
                 ))}
+                {promoVisible ? (
+                  <Link
+                    href={getPromoEntryHref(pathname)}
+                    onClick={(event) => {
+                      setOpen(false);
+                      if (pathname === "/" && scrollToHash("#promo")) {
+                        event.preventDefault();
+                      }
+                    }}
+                    className="touch-target rounded-xl px-3 py-2.5 text-base font-semibold text-accent sm:text-lg"
+                  >
+                    August Promo
+                  </Link>
+                ) : null}
               </nav>
-              <div className="mt-5 flex items-center gap-3 border-t border-border pt-5">
-                <button
-                  type="button"
-                  onClick={toggleTheme}
-                  className="glass touch-target rounded-xl text-subtext"
-                  aria-label="Toggle theme"
+              <div className="mt-5 border-t border-border pt-5">
+                <Button
+                  href={promoVisible ? getPromoEntryHref(pathname) : "/booking"}
+                  className="min-h-11 w-full"
+                  onClick={() => setOpen(false)}
                 >
-                  {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-                </button>
-                <Button href="/booking" className="min-h-11 flex-1" onClick={() => setOpen(false)}>
-                  Book Consultation
+                  {promoVisible ? `Get ${getPromoPriceLabel()} Site` : "Book Consultation"}
                 </Button>
               </div>
             </motion.div>
