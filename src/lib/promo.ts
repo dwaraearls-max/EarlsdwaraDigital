@@ -3,6 +3,7 @@ import { formatCurrency } from "@/lib/utils";
 
 export const websitePromo = {
   name: "August Website Promo",
+  enabled: false,
   price: 1500,
   timeZone: "Africa/Accra",
   teaserStart: "2026-08-18",
@@ -157,6 +158,8 @@ function formatYmdInZone(date: Date, timeZone: string) {
 }
 
 export function getPromoStatus(now = new Date()): PromoStatus {
+  if (!websitePromo.enabled) return "ended";
+
   const today = formatYmdInZone(now, websitePromo.timeZone);
   if (today > websitePromo.end) return "ended";
   if (today >= websitePromo.start) return "active";
