@@ -30,7 +30,7 @@ function replyTo(input: string): string {
     if (promoStatus === "upcoming") {
       return `From 21–31 August, every website type is ${getPromoPriceLabel()}. Go to /promo to choose your type and enter the details we need to build it.`;
     }
-    return "Our Starter plan begins at GH₵5,000, Professional at GH₵10,000, and Enterprise from GH₵20,000. Want a tailored estimate? Try /calculator or book a call.";
+    return "Our Starter plan begins at GH₵5,000, Professional at GH₵6,500, and Enterprise from GH₵8,000. Want a tailored estimate? Try /calculator or book a call.";
   }
   if (text.includes("book") || text.includes("consult") || text.includes("call")) {
     if (promoStatus === "active" || promoStatus === "upcoming") {

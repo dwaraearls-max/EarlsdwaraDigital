@@ -9,8 +9,8 @@ import { useMemo, useState } from "react";
 const pageOptions = [
   { label: "Landing page (1)", value: 1, base: 3500 },
   { label: "Starter site (5)", value: 5, base: 5000 },
-  { label: "Business site (8–12)", value: 10, base: 10000 },
-  { label: "Custom platform (15+)", value: 15, base: 20000 },
+  { label: "Business site (8–12)", value: 10, base: 6500 },
+  { label: "Custom platform (15+)", value: 15, base: 8000 },
 ];
 
 const addons = [

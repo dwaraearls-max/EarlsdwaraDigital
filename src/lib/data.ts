@@ -147,8 +147,7 @@ export const portfolio = [
     year: "2025",
     summary: "A premium storefront that lifted conversion by 41% in 90 days.",
     result: "+41% conversion",
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=80",
+    image: "/portfolio/lumen-commerce.jpg",
     color: "from-[#c9a46c]/40 to-[#0f2137]/80",
   },
   {
@@ -159,8 +158,7 @@ export const portfolio = [
     year: "2025",
     summary: "Immersive property discovery with inquiry-first UX architecture.",
     result: "3.2× more leads",
-    image:
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+    image: "/portfolio/aether-estates.jpg",
     color: "from-[#e0c08a]/35 to-[#081525]/70",
   },
   {
@@ -171,8 +169,7 @@ export const portfolio = [
     year: "2024",
     summary: "A calm, trustworthy digital campus for enrollment growth.",
     result: "+67% applications",
-    image:
-      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+    image: "/portfolio/brightpath-academy.jpg",
     color: "from-[#a8b0ba]/30 to-[#0f2137]/80",
   },
   {
@@ -183,8 +180,7 @@ export const portfolio = [
     year: "2025",
     summary: "Reservation-focused brand site with cinematic food storytelling.",
     result: "2× bookings",
-    image:
-      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80",
+    image: "/portfolio/harbor-dining.jpg",
     color: "from-[#c9a46c]/30 to-[#8b7355]/40",
   },
   {
@@ -195,8 +191,7 @@ export const portfolio = [
     year: "2024",
     summary: "Campaign landing system built for paid traffic and demos.",
     result: "4.8× ROAS",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+    image: "/portfolio/summit-launch.jpg",
     color: "from-[#e0c08a]/40 to-[#0f2137]/70",
   },
   {
@@ -207,8 +202,7 @@ export const portfolio = [
     year: "2024",
     summary: "A warm digital home that made giving and joining effortless.",
     result: "+85% donations",
-    image:
-      "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1200&q=80",
+    image: "/portfolio/grace-community.jpg",
     color: "from-[#a8b0ba]/25 to-[#c9a46c]/20",
   },
 ];
@@ -299,7 +293,7 @@ export const pricingPlans = [
   },
   {
     name: "Professional",
-    price: 10000,
+    price: 6500,
     description: "The growth system most businesses actually need.",
     features: [
       "Up to 12 custom pages",
@@ -315,7 +309,7 @@ export const pricingPlans = [
   },
   {
     name: "Enterprise",
-    price: 20000,
+    price: 8000,
     description: "Bespoke digital experiences for ambitious brands.",
     features: [
       "Fully custom platform",
